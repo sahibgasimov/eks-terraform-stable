@@ -25,3 +25,23 @@ aws sts get-caller-identity
 watch -n 1 -t kubectl get pods
 ###  Check logs 
 kubectl logs -l app=cluster-autoscaler -n kube-system -f
+
+
+### EKS cluster auto scaling demo
+Verify that AG (aws autoscaling group) has required tags:
+```
+k8s.io/cluster-autoscaler/<cluster-name> : owned
+k8s.io/cluster-autoscaler/enabled : TRUE
+ ```
+Split the terminal screen. In the first window run:
+```
+watch -n 1 -t kubectl get pods
+ ```
+In the second window run:
+```
+watch -n 1 -t kubectl get nodes
+```
+Now, to trigger autoscaling, increase replica for nginx deployment from 1 to 5.
+```
+kubectl apply -f k8s/deployment.yaml
+ ```
