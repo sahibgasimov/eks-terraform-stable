@@ -19,7 +19,9 @@ aws eks --region us-east-1 update-kubeconfig --name demo
  
  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
 
- # check your usedid account and role
+ ### check your usedid account and role
 aws sts get-caller-identity
 
 watch -n 1 -t kubectl get pods
+###  Check logs 
+kubectl logs -l app=cluster-autoscaler -n kube-system -f
