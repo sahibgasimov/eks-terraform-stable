@@ -21,3 +21,5 @@ aws eks --region us-east-1 update-kubeconfig --name demo
 
  # check your usedid account and role
 aws sts get-caller-identity
+
+watch -n 1 -t kubectl get pods
