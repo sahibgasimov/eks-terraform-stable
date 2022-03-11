@@ -15,9 +15,13 @@ How to Create EKS Cluster Using Terraform + IAM Roles for Service Accounts & EKS
 
 aws eks --region us-east-1 update-kubeconfig --name demo
 
- kube-metrics 
+#### Kube-Metrics 
  
  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
+
+ #### Cert Manager
+
+ kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.crds.yaml
 
  ### check your usedid account and role
 aws sts get-caller-identity
