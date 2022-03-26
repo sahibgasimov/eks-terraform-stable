@@ -1,5 +1,8 @@
 <!--- app-name: NGINX Ingress Controller -->
 
+annotations:
+  kubernetes.io/ingress.class: nginx
+
 # NGINX Ingress Controller packaged by Bitnami
 
 NGINX Ingress Controller is an Ingress controller that manages external access to HTTP services in a Kubernetes cluster using NGINX.
