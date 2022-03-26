@@ -1,6 +1,8 @@
 <!--- app-name: NGINX Ingress Controller -->
 
 annotations:
+
+
   kubernetes.io/ingress.class: nginx
 
 # NGINX Ingress Controller packaged by Bitnami
