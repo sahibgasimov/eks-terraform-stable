@@ -49,7 +49,7 @@ Now, to trigger autoscaling, increase replica for nginx deployment from 1 to 5.
 ```
 kubectl apply -f k8s/deployment.yaml
  ```
-###HELM Install
+### HELM Install
 
  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
  chmod 700 get_helm.sh
