@@ -37,3 +37,7 @@ resource "aws_eks_cluster" "demo" {
 
   depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
 }
+
+output "create_aws_kubeconfig" {
+value = "aws eks --region us-east-1 update-kubeconfig --name demo"
+}
