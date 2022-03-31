@@ -38,8 +38,7 @@ helm install ingress-controller ./
 
     elif [ $choice -eq 2 ]
     then
-cd /home/$USER/eks-terraform-stable
-helm uninstall nginx-controller
+helm uninstall ingress-controller
 
     elif [ $choice -eq 3 ]
     then 
