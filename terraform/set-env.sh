@@ -33,7 +33,7 @@ sudo mv kubectl /bin/
 
 # install nginx controller
 cd nginx-ingress-controller/
-helm install nginx-controller ./
+helm install ingress-controller ./
 
 
     elif [ $choice -eq 2 ]
