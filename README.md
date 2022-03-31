@@ -1,4 +1,4 @@
-# eks-terraform-stable
+## eks-terraform-stable
 
 ### This terraform code will create 
 1. VPC
@@ -22,3 +22,4 @@ aws eks --region us-east-1 update-kubeconfig --name demo
  ### Create kube-metrics 
  
  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
+
