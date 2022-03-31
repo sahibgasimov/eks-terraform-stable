@@ -117,7 +117,7 @@ ingressClassResource:
 publishService:
   ## @param publishService.enabled Set the endpoint records on the Ingress objects to reflect those on the service
   ##
-  enabled: false
+  enabled: true
   ## @param publishService.pathOverride Allows overriding of the publish service to bind to
   ## Must be <namespace>/<service_name>
   ##
