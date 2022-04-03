@@ -1,6 +1,6 @@
 ## eks-terraform-stable
 
-### This terraform code will create 
+### This terraform code will create AWS EKS Cluster
 1. VPC
 2. Internet Gateway 
 3. Subnets 2 private 2 public
