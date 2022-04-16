@@ -12,6 +12,7 @@ terraform {
   }
 }
 
+// Remote Backend Example
 // terraform {
 //   backend "s3" {
 //     bucket = "sgasimov-bucket"
@@ -21,4 +22,9 @@ terraform {
 //   }
 // }
 
-
+// Local Backend Example
+// terraform {
+//  backend "local" {
+//    path = "./$HOME/$USER/terraform.tfstate"
+//  }
+// }
