@@ -13,12 +13,19 @@ do
 set -e
 sudo yum install git 
 sudo yum install wget 
-wget https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip
-sudo unzip terraform_0.14.7_linux_amd64.zip
-sudo chmod +x terraform_0.14.7_linux_amd64.zip
-sudo mv terraform /bin
-rm -rf terraform_0.14.7_linux_amd64.zip
-
+if [ -f /bin/terraform ] 
+then
+    echo "
+    ##################################################################
+    #############   terraform already exists! ########################
+    ##################################################################"
+else 
+    wget https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip
+    sudo unzip terraform_0.14.7_linux_amd64.zip
+    sudo chmod +x terraform_0.14.7_linux_amd64.zip
+    sudo mv terraform /bin
+    rm -rf terraform_0.14.7_linux_amd64.zip
+fi
 
 # install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -32,7 +39,7 @@ sudo mv kubectl /bin/
     rm -rf get_helm.sh
 
 # install nginx controller
-cd nginx-ingress-controller/
+cd ../nginx-ingress-controller/
 helm install ingress-controller ./
 
 
