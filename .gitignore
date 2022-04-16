@@ -1,5 +1,7 @@
 # Local .terraform directories
 **/.terraform/*
+.terraform.lock.hcl
+terraform_0.14.7_linux_amd64.zip
 
 # .tfstate files
 *.tfstate
