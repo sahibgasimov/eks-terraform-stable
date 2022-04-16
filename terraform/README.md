@@ -1,17 +1,3 @@
-https://antonputra.com/terraform/how-to-create-eks-cluster-using-terraform/#create-iam-oidc-provider-eks-using-terraform
-
-https://www.youtube.com/watch?v=MZyrxzb7yAU&list=PLiMWaCMwGJXkeBzos8QuUxiYT6j8JYGE5&index=8&ab_channel=AntonPutra
-
-https://www.youtube.com/watch?v=EGdN21F2Jfw&ab_channel=AntonPutra
-How to Add IAM User and IAM Role to AWS EKS Cluster?
-
-https://antonputra.com/kubernetes/add-iam-user-and-iam-role-to-eks/
-How to Add IAM User and IAM Role to AWS EKS Cluster?¶
-
-
-https://www.youtube.com/watch?v=MZyrxzb7yAU&t=438s&ab_channel=AntonPutra
-How to Create EKS Cluster Using Terraform + IAM Roles for Service Accounts & EKS Cluster Autoscaler
-
 
 aws eks --region us-east-1 update-kubeconfig --name demo
 
@@ -54,3 +40,19 @@ kubectl apply -f k8s/deployment.yaml
  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
  chmod 700 get_helm.sh
  ./get_helm.sh
+
+
+### Useful Links
+
+https://antonputra.com/terraform/how-to-create-eks-cluster-using-terraform/#create-iam-oidc-provider-eks-using-terraform
+
+https://www.youtube.com/watch?v=MZyrxzb7yAU&list=PLiMWaCMwGJXkeBzos8QuUxiYT6j8JYGE5&index=8&ab_channel=AntonPutra
+
+https://www.youtube.com/watch?v=EGdN21F2Jfw&ab_channel=AntonPutra
+How to Add IAM User and IAM Role to AWS EKS Cluster?
+
+https://antonputra.com/kubernetes/add-iam-user-and-iam-role-to-eks/
+How to Add IAM User and IAM Role to AWS EKS Cluster?¶
+
+https://www.youtube.com/watch?v=MZyrxzb7yAU&t=438s&ab_channel=AntonPutra
+How to Create EKS Cluster Using Terraform + IAM Roles for Service Accounts & EKS Cluster Autoscaler
