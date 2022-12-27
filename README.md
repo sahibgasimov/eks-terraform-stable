@@ -13,6 +13,7 @@
 10. IAM Policy Autoscaler 
 11. Security Group
 12. Bastion Host for EKS Cluster
+13. EBS CSI Driver 
 
 ### To create kubeconfig
 
