@@ -3,7 +3,7 @@
 ### This terraform code will create AWS EKS Cluster
 1. VPC
 2. Internet Gateway 
-3. Subnets 2 private 2 public
+3. Subnets 3 private 3 public
 4. Nat Gateway
 5. Routes/Route Associations 
 6. AWS EKS Cluster
