@@ -21,8 +21,8 @@ aws eks --region us-east-1 update-kubeconfig --name demo
 
 ### Create external dns
 
-1. kubectl apply -f k8s/external-dns.yml
-2. kubectl apply -f k8s/nginx-app-test-extenaldns.yml  #test external dns on nginx app
+1. kubectl apply -f k8s/external-dns.yml  
+2. kubectl apply -f k8s/nginx-app-test-extenaldns.yml  #test external dns on nginx app, you need also to create A record for alb and modify in the app before launching
 
  ### Create kube-metrics 
  
