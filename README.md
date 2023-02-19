@@ -14,6 +14,7 @@
 11. Security Group
 12. Bastion Host for EKS Cluster
 13. EBS CSI Driver 
+14. ACM Cert for ALB/external DNS
 
 ### To create kubeconfig
 
