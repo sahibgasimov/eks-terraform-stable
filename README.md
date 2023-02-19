@@ -17,10 +17,13 @@
 
 ### To create kubeconfig
 
-
 aws eks --region us-east-1 update-kubeconfig --name demo
+
+### Create external dns
+
+1. kubectl apply -f k8s/external-dns.yml
+2. kubectl apply -f k8s/nginx-app-test-extenaldns.yml  #test external dns on nginx app
 
  ### Create kube-metrics 
  
  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
-
