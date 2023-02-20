@@ -32,8 +32,11 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonRoute53ReadOnlyAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53ReadOnlyAccess"
   role       = aws_iam_role.nodes.name
 }
-
-
+# giving nodes full permission to DynamoDB
+resource "aws_iam_role_policy_attachment" "nodes-AmazonDynamoDBFullAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+  role       = aws_iam_role.nodes.name
+}
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.demo.name
   node_group_name = "private-nodes"
