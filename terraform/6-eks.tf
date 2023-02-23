@@ -74,7 +74,7 @@ resource "aws_eks_cluster" "demo" {
   depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
 }
           }
-  }
+  
 
 
 resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
