@@ -73,7 +73,7 @@ resource "aws_eks_cluster" "demo" {
   
   depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
 }
-          }
+          
   
 
 
