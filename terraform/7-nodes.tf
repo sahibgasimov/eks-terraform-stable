@@ -15,7 +15,7 @@ resource "aws_iam_role" "nodes" {
 
 # external dns policy for allowing nodes access
 resource "aws_iam_policy" "external_dns_iam_policy" {
-  policy_name = "ExternalDNSPolicy"
+  name = "ExternalDNSPolicy"
   description = "The IAM Resources for External DNS"
 
   policy_document = jsonencode({
