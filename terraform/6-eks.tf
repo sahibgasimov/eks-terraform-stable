@@ -84,7 +84,7 @@ resource "aws_eks_cluster" "demo" {
 }
           }
   }
-}
+
 
 resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
   name = "/aws/eks/example/control-plane-logs"
