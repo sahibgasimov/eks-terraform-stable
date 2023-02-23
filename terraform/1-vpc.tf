@@ -6,3 +6,7 @@ resource "aws_vpc" "main" {
   }
 }
 
+
+output "vpc_id" {
+  default = aws_vpc.main.id 
+}
