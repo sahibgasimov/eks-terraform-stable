@@ -45,7 +45,7 @@ resource "aws_iam_policy" "external_dns_iam_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "external_dns_iam_policy_attachment" {
-  policy_arn = aws_iam_managed_policy.external_dns_iam_policy.arn
+  policy_arn = aws_iam_policy.external_dns_iam_policy.arn
   role       = aws_iam_role.nodes.name
 }
 
