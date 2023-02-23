@@ -66,8 +66,6 @@ resource "aws_eks_cluster" "demo" {
     enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 
 
-      # send logs to CloudWatch
-      cloudwatch_log_group_arn = aws_cloudwatch_log_group.eks_control_plane_logs.arn
 
   
   
@@ -78,7 +76,7 @@ resource "aws_eks_cluster" "demo" {
 
 
 resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
-  name = "/aws/eks/example/control-plane-logs"
+  name = "/aws/eks/demo/control-plane-logs"
 }
 
 output "create_aws_kubeconfig" {
