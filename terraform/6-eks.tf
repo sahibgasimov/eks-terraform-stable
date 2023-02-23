@@ -63,17 +63,8 @@ resource "aws_eks_cluster" "demo" {
     ]
   }
 #allow control-plane logging
-    logging {
-    cluster_logging {
-      enabled = true
+    enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 
-      types = [
-        "api",
-        "audit",
-        "authenticator",
-        "controllerManager",
-        "scheduler",
-      ]
 
       # send logs to CloudWatch
       cloudwatch_log_group_arn = aws_cloudwatch_log_group.eks_control_plane_logs.arn
