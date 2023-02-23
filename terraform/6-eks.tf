@@ -77,12 +77,13 @@ resource "aws_eks_cluster" "demo" {
 
       # send logs to CloudWatch
       cloudwatch_log_group_arn = aws_cloudwatch_log_group.eks_control_plane_logs.arn
-    }
-  }
-}
+
   
   
   depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
+}
+          }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
