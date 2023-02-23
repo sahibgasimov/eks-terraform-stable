@@ -18,7 +18,7 @@ resource "aws_iam_policy" "external_dns_iam_policy" {
   name = "ExternalDNSPolicy"
   description = "The IAM Resources for External DNS"
 
-  policy_document = jsonencode({
+policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
