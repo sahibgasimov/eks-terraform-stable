@@ -66,12 +66,13 @@ resource "aws_eks_cluster" "demo" {
     enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 
   
-  depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
+    depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
 }
           
   
-
-
+# The log group name format is /aws/eks/<cluster-name>/cluster
+# Reference: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster
 resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
   name = "/aws/eks/demo/control-plane-logs"
   retention_in_days = 7
