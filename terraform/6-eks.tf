@@ -66,13 +66,13 @@ resource "aws_eks_cluster" "demo" {
     enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 
     access_log {
-      name = aws_cloudwatch_log_group.eks_control_plane_logs.name
+      name = aws_cloudwatch_log_group.eks_control_plane_logs.arn
     }
   
   
   depends_on = [
     aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy,
-    aws_cloudwatch_log_group.eks_control_plane_logs.name
+    aws_cloudwatch_log_group.eks_control_plane_logs.arn
 
   ]
 }
