@@ -28,3 +28,9 @@ aws eks --region us-east-1 update-kubeconfig --name demo
  ### Create kube-metrics 
  
  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
+
+### Installing kubernetes Metrics Server
+#https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl get deployment metrics-server -n kube-system
