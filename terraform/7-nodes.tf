@@ -13,6 +13,45 @@ resource "aws_iam_role" "nodes" {
   })
 }
 
+# external dns policy for allowing nodes access
+resource "aws_iam_managed_policy" "external_dns_iam_policy" {
+  policy_name = "ExternalDNSPolicy"
+  description = "The IAM Resources for External DNS"
+
+  policy_document = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "route53:ChangeResourceRecordSets"
+        ],
+        "Resource": [
+          "arn:aws:route53:::hostedzone/*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "route53:ListHostedZones",
+          "route53:ListResourceRecordSets"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "external_dns_iam_policy_attachment" {
+  policy_arn = aws_iam_managed_policy.external_dns_iam_policy.arn
+  role       = aws_iam_role.nodes.name
+}
+
+
+
+
 #allow nodes access to alb_controller
 resource "aws_iam_policy" "alb_controller_iam_policy" {
   name        = "AlbControllerPolicy"
