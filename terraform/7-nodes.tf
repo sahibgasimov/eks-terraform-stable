@@ -288,7 +288,7 @@ resource "aws_launch_template" "eks-with-disks" {
   tags = {
     Name = "eks-private-node-${count.index}"
   }
-}
+
 }
 
 # resource "aws_launch_template" "eks-with-disks" {
