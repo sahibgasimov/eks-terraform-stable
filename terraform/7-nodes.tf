@@ -13,7 +13,8 @@ resource "aws_iam_role" "nodes" {
   })
 }
 
-# external dns policy for allowing nodes access
+# The following IAM Policy document allows ExternalDNS to update Route53 Resource Record Sets and Hosted Zones. 
+
 resource "aws_iam_policy" "external_dns_iam_policy" {
   name = "ExternalDNSPolicy"
   description = "The IAM Resources for External DNS"
