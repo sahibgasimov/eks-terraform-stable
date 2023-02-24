@@ -251,7 +251,7 @@ resource "aws_eks_node_group" "private-nodes" {
   labels = {
     role = "general"
   }
-  node_labels = {
+  tags = {
     "Name" = "private-node-${count.index + 1}"
   }
   # taint {
