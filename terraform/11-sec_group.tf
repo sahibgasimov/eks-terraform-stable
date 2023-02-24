@@ -1,5 +1,5 @@
 resource "aws_security_group" "main" {
-    name = "sd"
+    name = "eks-demo"
   egress = [
     {
       cidr_blocks      = [ "0.0.0.0/0", ]
