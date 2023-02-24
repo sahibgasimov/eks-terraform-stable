@@ -230,6 +230,7 @@ resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.demo.name
   node_group_name = "private-nodes"
   node_role_arn   = aws_iam_role.nodes.arn
+  count = "3"
   
   subnet_ids = [
     aws_subnet.private-us-east-1a.id,
@@ -277,8 +278,8 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-alb_controller_iam_policy
   ]
   
-    tags = {
-    Name = "eks-private-node-${count.index}"
+  tags {
+    Name = "${format("web-%03d", count.index + 1)}"
   }
 }
 
