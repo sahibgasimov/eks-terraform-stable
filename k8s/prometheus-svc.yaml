@@ -1,0 +1,44 @@
+#once  
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: prometheus
+    meta.helm.sh/release-namespace: default
+    external-dns.alpha.kubernetes.io/hostname: prometheus.cmcloudlab396.info #change to your subdomain name
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:845040637226:certificate/71893d87-2523-4e2b-a8eb-1251a0bb794c
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+  creationTimestamp: "2023-02-24T00:30:49Z"
+  labels:
+    app: prometheus
+    app.kubernetes.io/managed-by: Helm
+    chart: prometheus-19.6.1
+    component: server
+    heritage: Helm
+    release: prometheus
+  name: prometheus-server
+  namespace: default
+  resourceVersion: "28442"
+  uid: 29e23cb8-ae2f-49a0-878b-93a475f47c70
+spec:
+  clusterIP: 172.20.160.15
+  clusterIPs:
+  - 172.20.160.15
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    app: prometheus
+    component: server
+    release: prometheus
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
