@@ -230,7 +230,6 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_subnet.private-us-east-1b.id,
     aws_subnet.private-us-east-1c.id
   ]
-  count = 3 # set the number of instances you want to launch
 
   lifecycle {
     create_before_destroy = true
@@ -251,9 +250,7 @@ resource "aws_eks_node_group" "private-nodes" {
   labels = {
     role = "general"
   }
-  tags = {
-    "Name" = "private-node-${count.index + 1}"
-  }
+
   # taint {
   #   key    = "team"
   #   value  = "devops"
