@@ -284,16 +284,6 @@ resource "aws_eks_node_group" "private-nodes" {
 
 resource "aws_launch_template" "eks-with-disks" {
   name = "eks-with-disks"
-
-  key_name = "local-provisioner"
-
-  user_data = <<-EOF
-    #!/bin/bash
-
-    INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-    echo "Setting hostname to private-node-${INSTANCE_ID}"
-    hostnamectl set-hostname private-node-${INSTANCE_ID}
-  EOF
   
   tags = {
     Name = "eks-private-node-${count.index}"
