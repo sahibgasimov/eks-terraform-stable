@@ -227,7 +227,8 @@ resource "aws_eks_node_group" "private-nodes" {
   
   subnet_ids = [
     aws_subnet.private-us-east-1a.id,
-    aws_subnet.private-us-east-1b.id
+    aws_subnet.private-us-east-1b.id,
+    aws_subnet.private-us-east-1c.id
   ]
 
   capacity_type  = "ON_DEMAND"
@@ -262,6 +263,9 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.nodes-AmazonRoute53ReadOnlyAccess,
+    aws_iam_role_policy_attachment.nodes-AmazonDynamoDBFullAccess,
+    aws_iam_role_policy_attachment.nodes-alb_controller_iam_policy
   ]
 }
 
