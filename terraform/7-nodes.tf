@@ -278,7 +278,7 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-alb_controller_iam_policy
   ]
   
-  tags {
+  tag {
     Name = "${format("web-%03d", count.index + 1)}"
   }
 }
