@@ -204,6 +204,12 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.nodes.name
 }
+
+
+resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2RoleforSSM" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+  role       = aws_iam_role.nodes.name
+}
 # giving nodes permission to access route53
 resource "aws_iam_role_policy_attachment" "nodes-AmazonRoute53ReadOnlyAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53ReadOnlyAccess"
@@ -270,6 +276,10 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonDynamoDBFullAccess,
     aws_iam_role_policy_attachment.nodes-alb_controller_iam_policy
   ]
+  
+    tags = {
+    Name = "eks-private-node-${count.index}"
+  }
 }
 
 resource "aws_launch_template" "eks-with-disks" {
