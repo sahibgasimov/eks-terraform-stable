@@ -285,9 +285,6 @@ resource "aws_eks_node_group" "private-nodes" {
 resource "aws_launch_template" "eks-with-disks" {
   name = "eks-with-disks"
   
-  tags = {
-    Name = "eks-private-node-${count.index}"
-  }
 
 }
 
