@@ -257,10 +257,10 @@ resource "aws_eks_node_group" "private-nodes" {
   #   effect = "NO_SCHEDULE"
   # }
 
-  # launch_template {
-  #   name    = aws_launch_template.eks-with-disks.name
-  #   version = aws_launch_template.eks-with-disks.latest_version
-  # }
+   launch_template {
+     name    = aws_launch_template.eks-with-disks.name
+     version = aws_launch_template.eks-with-disks.latest_version
+   }
 
   depends_on = [
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
