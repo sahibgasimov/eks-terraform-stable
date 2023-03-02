@@ -21,25 +21,32 @@
 aws eks --region us-east-1 update-kubeconfig --name demo
 
 ##Additional tooling
-### Create external dns 
 
+### K8S CRD
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+```
+### Create external dns 
+```
 1. kubectl apply -f k8s/external-dns.yml  
 2. kubectl apply -f k8s/nginx-app-test-extenaldns.yml  #test external dns on nginx app, you need also to create A record for alb and modify in the app before launching
 Note: external-dns allow policy was given in nodes.tf file 
+```
 Reference: https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
  ### Create kube-metrics 
- 
+ ```
  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
-
+```
 ### Installing kubernetes Metrics Server
 https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html
-
+```
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 kubectl get deployment metrics-server -n kube-system
-
+```
 ### Prometheus 
 https://docs.aws.amazon.com/eks/latest/userguide/prometheus.html
-
+```
 kubectl create namespace prometheus
 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -49,3 +56,4 @@ helm upgrade -i prometheus prometheus-community/prometheus \
     --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
     
 kubectl get pods -n prometheus
+```
