@@ -23,7 +23,7 @@ aws eks --region us-east-1 update-kubeconfig --name demo
 ##Additional tooling
 
 ### K8S CRD
-
+The CRDs provide the necessary metadata and schema information to the Kubernetes API server so that it can properly handle Ingress resources.
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 ```
