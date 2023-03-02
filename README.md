@@ -22,6 +22,10 @@ aws eks --region us-east-1 update-kubeconfig --name demo
 
 ##Additional tooling
 
+### Deploy and Access the Kubernetes Dashboard
+
+https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+
 ### K8S CRD
 The CRDs provide the necessary metadata and schema information to the Kubernetes API server so that it can properly handle Ingress resources.
 ```
