@@ -1,27 +1,28 @@
-resource "aws_route53_zone" "hello_world_zone" {
+provider "aws" {
+  region = "us-east-1"
+  alias  = "certificates"
+}
+
+provider "aws" {
+  region = "us-east-1"
+  alias  = "dns"
+}
+
+resource "aws_route53_zone" "default" {
   name = var.domain
 }
-resource "aws_acm_certificate" "hello_certificate" {
-  domain_name       = "*.${var.domain}"
-  validation_method = "DNS"
-  lifecycle {
-    create_before_destroy = true
-  }
-  tags = {
-    Name = var.domain
-  }
-}
 
-resource "aws_route53_record" "hello_cert_dns" {
-  allow_overwrite = true
-  name =  tolist(aws_acm_certificate.hello_certificate.domain_validation_options)[0].resource_record_name
-  records = [tolist(aws_acm_certificate.hello_certificate.domain_validation_options)[0].resource_record_value]
-  type = tolist(aws_acm_certificate.hello_certificate.domain_validation_options)[0].resource_record_type
-  zone_id = aws_route53_zone.hello_world_zone.zone_id
-  ttl = 60
-}
+module "cert" {
+  source = "github.com/azavea/terraform-aws-acm-certificate"
 
-resource "aws_acm_certificate_validation" "hello_cert_validate" {
-  certificate_arn = aws_acm_certificate.hello_certificate.arn
-  validation_record_fqdns = [aws_route53_record.hello_cert_dns.fqdn]
+  providers = {
+    aws.acm_account     = "aws.certificates"
+    aws.route53_account = "aws.dns"
+  }
+
+  domain_name                       = var.domain
+  subject_alternative_names         = ["*.${var.domain}"]
+  hosted_zone_id                    = "${aws_route53_zone.default.zone_id}"
+  validation_record_ttl             = "60"
+  allow_validation_record_overwrite = true
 }
