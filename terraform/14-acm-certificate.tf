@@ -8,3 +8,7 @@ module "cert" {
   validation_record_ttl             = "60"
   allow_validation_record_overwrite = true
 }
+
+  resource "aws_route53_zone" "default" {
+  name = "azavea.com"
+}
