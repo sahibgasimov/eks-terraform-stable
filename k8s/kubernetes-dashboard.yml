@@ -1,4 +1,3 @@
-kubectl create namespace kubernetes-dashboard
 apiVersion: v1
 kind: ServiceAccount
 metadata:
