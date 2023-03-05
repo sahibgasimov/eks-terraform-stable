@@ -54,6 +54,13 @@ resource "aws_iam_role_policy_attachment" "external_dns_iam_policy_attachment" {
 
 
 #allow nodes access to alb_controller
+#Allow the creation of Service-Linked Roles for ELBs.
+#Allow access to various EC2 resources, including instances, security groups, subnets, and network interfaces.
+#Allow access to various resources related to ELBs, including load balancers, listeners, target groups, SSL policies, and rules.
+#Allow access to various resources related to AWS Shield, AWS WAF, and ACM.
+#Allow the creation and deletion of security groups, as well as the addition and removal of rules.
+#Allow the creation of load balancers, target groups, listeners, and rules.
+#Allow the addition and removal of tags from target groups and load balancers.
 resource "aws_iam_policy" "alb_controller_iam_policy" {
   name        = "AlbControllerPolicy"
   description = "The IAM policy for the ALB Controller"
