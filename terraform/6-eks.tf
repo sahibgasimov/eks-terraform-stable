@@ -49,7 +49,8 @@ resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
 }
 
 resource "aws_eks_cluster" "demo" {
-  name     = "demo"
+  name     =  var.cluster_name
+  version = var.cluster_version
   role_arn = aws_iam_role.demo.arn
 
   vpc_config {
@@ -78,6 +79,4 @@ resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
   retention_in_days = 7
 }
 
-output "create_aws_kubeconfig" {
-value = "aws eks --region us-east-1 update-kubeconfig --name demo"
-}
+
