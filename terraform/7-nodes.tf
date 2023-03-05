@@ -357,7 +357,7 @@ resource "aws_eks_node_group" "private-nodes" {
   ]
 
   lifecycle {
-    create_before_destroy = true,
+    create_before_destroy = true
     # Allow external changes without Terraform plan difference
     ignore_changes = [scaling_config[0].desired_size]
   }
