@@ -357,7 +357,9 @@ resource "aws_eks_node_group" "private-nodes" {
   ]
 
   lifecycle {
-    create_before_destroy = true
+    create_before_destroy = true,
+    # Allow external changes without Terraform plan difference
+    ignore_changes = [scaling_config[0].desired_size]
   }
   capacity_type  = "ON_DEMAND"
   instance_types = ["t3.small"]
@@ -381,6 +383,7 @@ resource "aws_eks_node_group" "private-nodes" {
   #   value  = "devops"
   #   effect = "NO_SCHEDULE"
   # }
+  
 
    launch_template {
      name    = aws_launch_template.eks-with-disks.name
