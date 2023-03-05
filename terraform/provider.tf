@@ -36,7 +36,7 @@ terraform {
 #        name = "LockID"
 #        type = "S"
 #    }
-}
+#}
 
 // Local Backend Example
 // terraform {
