@@ -49,7 +49,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: api.antonputra.com
+    - host: api.cmcloudlab1731.info
       http:
         paths:
           - path: /
