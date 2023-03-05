@@ -45,6 +45,7 @@ resource "helm_release" "aws-load-balancer-controller" {
 }
 
 ##EXTERNAL DNS
+
 locals {
   k8s = {
     type    = "eks"
@@ -52,7 +53,7 @@ locals {
 }
 }
 
-
+## EXTERNAL-DNS
 data "aws_caller_identity" "demo" {}
 
 data "aws_eks_cluster" "demo" {
@@ -97,7 +98,7 @@ resource "helm_release" "external-dns" {
 
   set {
     name  = "domainFilters[0]"
-    value = "cm
+    value = "robofarming.link"
   }
 
   set {
