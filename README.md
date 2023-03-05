@@ -1,5 +1,10 @@
 ## eks-terraform-stable
 
+### Pre-requsites on local machine
+- aws-cli
+- terraform
+- helm
+
 ### This terraform code will create AWS EKS Cluster
 1. VPC
 2. Internet Gateway 
