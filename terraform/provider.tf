@@ -12,30 +12,30 @@ terraform {
   }
 }
 ###############################create these 2 resources first 
- resource "aws_s3_bucket" "mybucket" {
-    bucket = "s3statebackend-3212"
-    versioning {
-        enabled = true
-    }
-    server_side_encryption_configuration {
-        rule {
-            apply_server_side_encryption_by_default {
-                sse_algorithm = "AES256"
-            }
-        }
-    }
-}
+# resource "aws_s3_bucket" "mybucket" {
+#    bucket = "s3statebackend-3212"
+#    versioning {
+#        enabled = true
+#    }
+#    server_side_encryption_configuration {
+#        rule {
+#            apply_server_side_encryption_by_default {
+#                sse_algorithm = "AES256"
+#            }
+#        }
+#    }
+#}
 
 ##create dynamodb
-resource "aws_dynamodb_table" "statelock" {
-    name = "state-lock"
-    billing_mode = "PAY_PER_REQUEST"
-    hash_key = "LockID"
+#resource "aws_dynamodb_table" "statelock" {
+#    name = "state-lock"
+#    billing_mode = "PAY_PER_REQUEST"
+#    hash_key = "LockID"
 
-    attribute {
-        name = "LockID"
-        type = "S"
-    }
+#    attribute {
+#        name = "LockID"
+#        type = "S"
+#    }
 }
 
 // Local Backend Example
