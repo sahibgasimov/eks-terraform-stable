@@ -78,5 +78,3 @@ resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
   name = "/aws/eks/demo/control-plane-logs"
   retention_in_days = 7
 }
-
-
