@@ -42,6 +42,3 @@ resource "aws_iam_role_policy_attachment" "test_attach" {
   policy_arn = aws_iam_policy.test-policy.arn
 }
 
-output "test_policy_arn" {
-  value = aws_iam_role.test_oidc.arn
-}

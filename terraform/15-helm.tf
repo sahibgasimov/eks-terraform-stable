@@ -9,7 +9,7 @@ provider "helm" {
     }
   }
 }
-# aws loadbalancer controller
+ #aws loadbalancer controller
 resource "helm_release" "aws-load-balancer-controller" {
   name = "aws-load-balancer-controller"
 
@@ -44,16 +44,14 @@ resource "helm_release" "aws-load-balancer-controller" {
   ]
 }
 
-##EXTERNAL DNS
-/* 
+#External DNS
 locals {
   k8s = {
     type    = "eks"
     cluster = "demo"
 }
-}
+} 
 
-## EXTERNAL-DNS
 data "aws_caller_identity" "demo" {}
 
 data "aws_eks_cluster" "demo" {
@@ -64,9 +62,10 @@ data "aws_eks_cluster_auth" "aws_iam_authenticator" {
   name = data.aws_eks_cluster.demo.name
 }
 
-data "aws_route53_zone" "demo" {
+/* data "aws_route53_zone" "demo" {
+  vpc_id = aws_vpc.main.id
   name = var.domain
-}
+} */
 
 resource "helm_release" "external-dns" {
   name       = "external-dns"
@@ -97,7 +96,7 @@ resource "helm_release" "external-dns" {
 
   set {
     name  = "domainFilters[0]"
-    value = "robofarming.link"
+    value = var.domain
   }
 
   set {
@@ -106,7 +105,7 @@ resource "helm_release" "external-dns" {
   }
 
   set {
-    name  = "txtOwnerId" # TXT record identifier
+    name  = "txtOwnerId"  #TXT record identifier
     value = "external-dns"
   }
 }
@@ -176,4 +175,4 @@ resource "aws_iam_policy" "external_dns" {
   ]
 }
 EOF
-} */
+} 

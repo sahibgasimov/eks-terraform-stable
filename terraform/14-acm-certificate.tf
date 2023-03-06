@@ -16,8 +16,8 @@ module "cert" {
   source = "github.com/azavea/terraform-aws-acm-certificate"
 
   providers = {
-    aws.acm_account     = "aws.certificates"
-    aws.route53_account = "aws.dns"
+    aws.acm_account     = aws.certificates
+    aws.route53_account = aws.dns
   }
 
  domain_name                       = var.domain
