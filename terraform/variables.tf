@@ -1,5 +1,5 @@
 variable "domain" {
-default = "cmcloudlab1731.info"
+default = "cmcloudlab676.info"
 }
 
 variable "cluster_name" {

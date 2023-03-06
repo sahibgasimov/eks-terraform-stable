@@ -45,7 +45,7 @@ resource "helm_release" "aws-load-balancer-controller" {
 }
 
 ##EXTERNAL DNS
-
+/* 
 locals {
   k8s = {
     type    = "eks"
@@ -59,7 +59,6 @@ data "aws_caller_identity" "demo" {}
 data "aws_eks_cluster" "demo" {
   name = local.k8s.cluster
 }
-
 
 data "aws_eks_cluster_auth" "aws_iam_authenticator" {
   name = data.aws_eks_cluster.demo.name
@@ -177,4 +176,4 @@ resource "aws_iam_policy" "external_dns" {
   ]
 }
 EOF
-}
+} */

@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: 4-app
+  name: nginx
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echoserver
-  namespace: 4-app
+  namespace: nginx
 spec:
   selector:
     matchLabels:
@@ -29,7 +29,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: echoserver
-  namespace: 4-app
+  namespace: nginx
 spec:
   ports:
   - port: 8080
@@ -42,7 +42,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: echoserver
-  namespace: 4-app
+  namespace: nginx
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip #external dns will create record
@@ -53,7 +53,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: api.cmcloudlab676.info
+    - host: nginx.cmcloudlab676.info
       http:
         paths:
           - path: /
