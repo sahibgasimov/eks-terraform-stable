@@ -6,7 +6,29 @@ resource "aws_vpc" "main" {
   }
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
 
-output "vpc_id" {
-  value = aws_vpc.main.id 
+  tags = {
+    Name = "igw"
+  }
+}
+
+resource "aws_eip" "nat" {
+  vpc = true
+
+  tags = {
+    Name = "nat"
+  }
+}
+
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public-us-east-1a.id
+
+  tags = {
+    Name = "nat"
+  }
+
+  depends_on = [aws_internet_gateway.igw]
 }
