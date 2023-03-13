@@ -9,3 +9,7 @@ variable "cluster_name" {
 variable "cluster_version" {
   default = "1.24"
 }
+
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+}
