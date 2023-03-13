@@ -349,7 +349,7 @@ resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.demo.name
   node_group_name = "private-nodes"
   node_role_arn   = aws_iam_role.nodes.arn
-  
+
   subnet_ids = [
     aws_subnet.private-us-east-1a.id,
     aws_subnet.private-us-east-1b.id,
@@ -383,12 +383,12 @@ resource "aws_eks_node_group" "private-nodes" {
   #   value  = "devops"
   #   effect = "NO_SCHEDULE"
   # }
-  
 
-   launch_template {
-     name    = aws_launch_template.eks-with-disks.name
-     version = aws_launch_template.eks-with-disks.latest_version
-   }
+
+  launch_template {
+    name    = aws_launch_template.eks-with-disks.name
+    version = aws_launch_template.eks-with-disks.latest_version
+  }
 
   depends_on = [
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
@@ -396,15 +396,15 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
     aws_iam_role_policy_attachment.nodes-AmazonRoute53ReadOnlyAccess,
     aws_iam_role_policy_attachment.nodes-AmazonDynamoDBFullAccess,
-   # aws_iam_role_policy_attachment.nodes-alb_controller_iam_policy
+    # aws_iam_role_policy_attachment.nodes-alb_controller_iam_policy
   ]
-  
+
 
 }
 
 resource "aws_launch_template" "eks-with-disks" {
   name = "eks-with-disks"
-  
+
 
 }
 

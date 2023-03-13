@@ -19,8 +19,8 @@ POLICY
 
 # allow eks control plane logging
 resource "aws_iam_policy" "eks_control_plane_logs" {
-  name        = "eks-control-plane-logs-policy"
-  policy      = <<POLICY
+  name   = "eks-control-plane-logs-policy"
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -49,8 +49,8 @@ resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
 }
 
 resource "aws_eks_cluster" "demo" {
-  name     =  var.cluster_name
-  version = var.cluster_version
+  name     = var.cluster_name
+  version  = var.cluster_version
   role_arn = aws_iam_role.demo.arn
 
   vpc_config {
@@ -63,18 +63,18 @@ resource "aws_eks_cluster" "demo" {
       aws_subnet.public-us-east-1c.id
     ]
   }
-#allow control-plane logging
-    enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
+  #allow control-plane logging
+  enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 
-  
-    depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
+
+  depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
 }
-          
-  
+
+
 # The log group name format is /aws/eks/<cluster-name>/cluster
 # Reference: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster
 resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
-  name = "/aws/eks/demo/control-plane-logs"
+  name              = "/aws/eks/demo/control-plane-logs"
   retention_in_days = 7
 }

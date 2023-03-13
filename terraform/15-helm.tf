@@ -9,7 +9,7 @@ provider "helm" {
     }
   }
 }
- #aws loadbalancer controller
+#aws loadbalancer controller
 resource "helm_release" "aws-load-balancer-controller" {
   name = "aws-load-balancer-controller"
 
@@ -49,8 +49,8 @@ locals {
   k8s = {
     type    = "eks"
     cluster = "demo"
+  }
 }
-} 
 
 data "aws_caller_identity" "demo" {}
 
@@ -105,7 +105,7 @@ resource "helm_release" "external-dns" {
   }
 
   set {
-    name  = "txtOwnerId"  #TXT record identifier
+    name  = "txtOwnerId" #TXT record identifier
     value = "external-dns"
   }
 }
