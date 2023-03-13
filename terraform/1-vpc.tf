@@ -38,8 +38,8 @@ resource "aws_nat_gateway" "nat" {
 #Private Subnets AZ=a,b,c
 resource "aws_subnet" "private-us-east-1a" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.0.0/19"
-  availability_zone = "us-east-1a"
+  cidr_block        = var.private_subnet_1
+  availability_zone = "${var.region}a"
 
   tags = {
     "Name"                            = "private-us-east-1a"
@@ -50,8 +50,8 @@ resource "aws_subnet" "private-us-east-1a" {
 
 resource "aws_subnet" "private-us-east-1b" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.32.0/19"
-  availability_zone = "us-east-1b"
+  cidr_block        = var.private_subnet_2
+  availability_zone = "${var.region}b"
 
   tags = {
     "Name"                            = "private-us-east-1b"
@@ -62,8 +62,8 @@ resource "aws_subnet" "private-us-east-1b" {
 
 resource "aws_subnet" "private-us-east-1c" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.128.0/19"
-  availability_zone = "us-east-1c"
+  cidr_block        = var.private_subnet_3
+  availability_zone = "${var.region}c"
 
   tags = {
     "Name"                            = "private-us-east-1c"
@@ -77,7 +77,7 @@ resource "aws_subnet" "private-us-east-1c" {
 resource "aws_subnet" "public-us-east-1a" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.64.0/19"
-  availability_zone       = "us-east-1a"
+  availability_zone       = "${var.region}a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -90,7 +90,7 @@ resource "aws_subnet" "public-us-east-1a" {
 resource "aws_subnet" "public-us-east-1b" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.96.0/19"
-  availability_zone       = "us-east-1b"
+  availability_zone       = "${var.region}b"
   map_public_ip_on_launch = true
 
   tags = {
@@ -103,7 +103,7 @@ resource "aws_subnet" "public-us-east-1b" {
 resource "aws_subnet" "public-us-east-1c" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.160.0/19"
-  availability_zone       = "us-east-1c"
+  availability_zone       = "${var.region}c"
   map_public_ip_on_launch = true
 
   tags = {
