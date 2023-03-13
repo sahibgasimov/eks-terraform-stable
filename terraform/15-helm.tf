@@ -8,15 +8,16 @@ provider "helm" {
       command     = "aws"
     }
   }
+  
 }
-#aws loadbalancer controller
+ #aws loadbalancer controller
 resource "helm_release" "aws-load-balancer-controller" {
   name = "aws-load-balancer-controller"
 
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
-  version    = "1.4.1"
+  version    = "1.4.8"
 
   set {
     name  = "clusterName"
@@ -25,7 +26,7 @@ resource "helm_release" "aws-load-balancer-controller" {
 
   set {
     name  = "image.tag"
-    value = "v2.4.2"
+    value = "v2.4.7"
   }
 
   set {
@@ -49,8 +50,8 @@ locals {
   k8s = {
     type    = "eks"
     cluster = "demo"
-  }
 }
+} 
 
 data "aws_caller_identity" "demo" {}
 
@@ -72,7 +73,7 @@ resource "helm_release" "external-dns" {
   namespace  = "kube-system"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
-  version    = "6.5.6"
+  version    = "6.14.3"
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
@@ -105,7 +106,7 @@ resource "helm_release" "external-dns" {
   }
 
   set {
-    name  = "txtOwnerId" #TXT record identifier
+    name  = "txtOwnerId"  #TXT record identifier
     value = "external-dns"
   }
 }
