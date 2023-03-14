@@ -12,7 +12,7 @@ terraform {
   }
 }
 ###############################create these 2 resources first 
- /* resource "aws_s3_bucket" "mybucket" {
+/* resource "aws_s3_bucket" "mybucket" {
     bucket = "cmcloudlab893-info"
     versioning {
         enabled = true

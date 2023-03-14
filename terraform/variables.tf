@@ -1,5 +1,11 @@
+
+variable "region" {
+  default = "us-east-1"
+}
+variable "hosted_zone_id" {}
+
 variable "domain" {
-  default = "cmcloudlab893.info"
+  default = "cmcloudlab1792.info"
 }
 
 variable "cluster_name" {

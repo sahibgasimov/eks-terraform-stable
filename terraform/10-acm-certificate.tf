@@ -1,10 +1,10 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
   alias  = "certificates"
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
   alias  = "dns"
 }
 
@@ -22,7 +22,7 @@ module "cert" {
 
   domain_name                       = var.domain
   subject_alternative_names         = ["*.${var.domain}"]
-  hosted_zone_id                    = "Z076023210LV643F00SDR"
+  hosted_zone_id                    = var.hosted_zone_id
   validation_record_ttl             = "60"
   allow_validation_record_overwrite = true
 }
