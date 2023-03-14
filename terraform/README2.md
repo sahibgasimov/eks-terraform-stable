@@ -425,3 +425,10 @@ That’s it now, you have learned how to create various resources in AWS using T
  
 
 https://artifacthub.io/ - for helm charts 
+
+######## opencost
+ 
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
+helm install my-prometheus --repo https://prometheus-community.github.io/helm-charts prometheus   --namespace prometheus --create-namespace   --set pushgateway.enabled=false   --set alertmanager.enabled=false   -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/prometheus/extraScrapeConfigs.yaml
+    kubectl apply --namespace opencost -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/opencost.yaml
+kubectl port-forward --namespace opencost service/opencost 9003 9090
