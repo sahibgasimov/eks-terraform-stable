@@ -351,9 +351,9 @@ resource "aws_eks_node_group" "private-nodes" {
   node_role_arn   = aws_iam_role.nodes.arn
 
   subnet_ids = [
-    aws_subnet.private-us-east-1a.id,
-    aws_subnet.private-us-east-1b.id,
-    aws_subnet.private-us-east-1c.id
+    aws_subnet.private-1.id,
+    aws_subnet.private-2.id,
+    aws_subnet.private-3.id
   ]
 
   lifecycle {
@@ -380,7 +380,7 @@ resource "aws_eks_node_group" "private-nodes" {
 
   # taint {
   #   key    = "team"
-  #   value  = "devops"
+  #   value  = "developers"
   #   effect = "NO_SCHEDULE"
   # }
 
@@ -402,25 +402,17 @@ resource "aws_eks_node_group" "private-nodes" {
 
 }
 
+
 resource "aws_launch_template" "eks-with-disks" {
-  name = "eks-with-disks"
-
-
+  name     = "eks-with-disks"
+  key_name = "local-provisioner"
+  block_device_mappings {
+    device_name = "/dev/xvdb"
+    ebs {
+      volume_size = 20
+      volume_type = "gp2"
+    }
+  }
 }
-
-# resource "aws_launch_template" "eks-with-disks" {
-#   name = "eks-with-disks"
-
-#   key_name = "local-provisioner"
-
-#   block_device_mappings {
-#     device_name = "/dev/xvdb"
-
-#     ebs {
-#       volume_size = 50
-#       volume_type = "gp2"
-#     }
-#   }
-# }
 
 
