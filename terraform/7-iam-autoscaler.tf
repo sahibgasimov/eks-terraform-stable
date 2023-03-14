@@ -47,3 +47,6 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_autoscaler_attach" {
   policy_arn = aws_iam_policy.eks_cluster_autoscaler.arn
 }
 
+data "aws_autoscaling_group" "node_group" {
+  name = "${aws_eks_node_group.private-nodes.node_group_name}"
+}
