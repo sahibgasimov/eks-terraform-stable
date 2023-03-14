@@ -1,11 +1,11 @@
-
-
-cluster_name = ""
+cluster_name    = "sahib"
+cluster_version = "1.24"
+environment = "dev"
 
 #### Route53 Domain ####
 region         = "us-east-1"
-domain         = "cmcloudlab1792.info"
-hosted_zone_id = "Z02728763O79O6PJSXHR3"
+domain         = "cmcloudlab799.info"
+hosted_zone_id = "Z07770403UIZIHSKU8T12"
 
 ##### Networking #####
 vpc_cidr         = "10.0.0.0/16"

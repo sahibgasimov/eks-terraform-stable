@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "test_oidc_assume_role_policy" {
+data "aws_iam_policy_document" "dev_oidc_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     effect  = "Allow"
@@ -16,13 +16,13 @@ data "aws_iam_policy_document" "test_oidc_assume_role_policy" {
   }
 }
 
-resource "aws_iam_role" "test_oidc" {
-  assume_role_policy = data.aws_iam_policy_document.test_oidc_assume_role_policy.json
-  name               = "test-oidc"
+resource "aws_iam_role" "dev_oidc" {
+  assume_role_policy = data.aws_iam_policy_document.dev_oidc_assume_role_policy.json
+  name               = "${var.cluster_name}-oidc"
 }
 
-resource "aws_iam_policy" "test-policy" {
-  name = "test-policy"
+resource "aws_iam_policy" "dev-policy" {
+  name = "${var.cluster_name}-policy"
 
   policy = jsonencode({
     Statement = [{
@@ -37,8 +37,8 @@ resource "aws_iam_policy" "test-policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "test_attach" {
-  role       = aws_iam_role.test_oidc.name
-  policy_arn = aws_iam_policy.test-policy.arn
+resource "aws_iam_role_policy_attachment" "dev_attach" {
+  role       = aws_iam_role.dev_oidc.name
+  policy_arn = aws_iam_policy.dev-policy.arn
 }
 

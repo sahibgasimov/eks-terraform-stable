@@ -1,10 +1,10 @@
 provider "aws" {
-  region = var.region
+  region = "us-east-1"
   alias  = "certificates"
 }
 
 provider "aws" {
-  region = var.region
+  region = "us-east-1"
   alias  = "dns"
 }
 

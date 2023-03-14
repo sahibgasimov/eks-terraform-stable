@@ -5,7 +5,7 @@ output "SomeOutput" {
 
         VPC ID                                  ${aws_vpc.main.id}
 
-        Test policy arn                         ${aws_iam_role.test_oidc.arn}
+        Test policy arn                         ${aws_iam_role.dev_oidc.arn}
 
         EKS Cluster autoscaler arn              ${aws_iam_role.eks_cluster_autoscaler.arn}
 
