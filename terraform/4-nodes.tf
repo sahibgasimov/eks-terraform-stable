@@ -406,7 +406,6 @@ resource "aws_eks_node_group" "private-nodes" {
 
 resource "aws_launch_template" "dev" {
   name     = "${var.cluster_name}"
-  key_name = "local-provisioner"
   block_device_mappings {
     device_name = "/dev/xvdb"
     ebs {

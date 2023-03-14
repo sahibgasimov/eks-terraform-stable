@@ -18,6 +18,3 @@ output "SomeOutput" {
         
     EOF
 }
-
-
-
