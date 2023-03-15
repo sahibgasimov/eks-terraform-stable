@@ -1,10 +1,10 @@
 provider "helm" {
   kubernetes {
-    host                   = aws_eks_cluster.demo.endpoint
-    cluster_ca_certificate = base64decode(aws_eks_cluster.demo.certificate_authority[0].data)
+    host                   = aws_eks_cluster.dev.endpoint
+    cluster_ca_certificate = base64decode(aws_eks_cluster.dev.certificate_authority[0].data)
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", aws_eks_cluster.demo.id]
+      args        = ["eks", "get-token", "--cluster-name", aws_eks_cluster.dev.id]
       command     = "aws"
     }
   }
@@ -21,7 +21,7 @@ resource "helm_release" "aws-load-balancer-controller" {
 
   set {
     name  = "clusterName"
-    value = aws_eks_cluster.demo.id
+    value = aws_eks_cluster.dev.id
   }
 
   set {
@@ -49,21 +49,21 @@ resource "helm_release" "aws-load-balancer-controller" {
 locals {
   k8s = {
     type    = "eks"
-    cluster = "demo"
+    cluster = "dev"
 }
 } 
 
-data "aws_caller_identity" "demo" {}
+data "aws_caller_identity" "dev" {}
 
-data "aws_eks_cluster" "demo" {
+data "aws_eks_cluster" "dev" {
   name = local.k8s.cluster
 }
 
 data "aws_eks_cluster_auth" "aws_iam_authenticator" {
-  name = data.aws_eks_cluster.demo.name
+  name = data.aws_eks_cluster.dev.name
 }
 
-/* data "aws_route53_zone" "demo" {
+/* data "aws_route53_zone" "dev" {
   vpc_id = aws_vpc.main.id
   name = var.domain
 } */
@@ -121,12 +121,12 @@ resource "aws_iam_role" "external_dns" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::${data.aws_caller_identity.demo.account_id}:oidc-provider/${replace(data.aws_eks_cluster.demo.identity[0].oidc[0].issuer, "https://", "")}"
+        "Federated": "arn:aws:iam::${data.aws_caller_identity.dev.account_id}:oidc-provider/${replace(data.aws_eks_cluster.dev.identity[0].oidc[0].issuer, "https://", "")}"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "${replace(data.aws_eks_cluster.demo.identity[0].oidc[0].issuer, "https://", "")}:sub": "system:serviceaccount:kube-system:external-dns"
+          "${replace(data.aws_eks_cluster.dev.identity[0].oidc[0].issuer, "https://", "")}:sub": "system:serviceaccount:kube-system:external-dns"
         }
       }
     }

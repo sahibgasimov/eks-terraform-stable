@@ -29,10 +29,9 @@ resource "aws_iam_role_policy_attachment" "amazon_ebs_csi_driver" {
 resource "aws_eks_addon" "csi_driver" {
   cluster_name             = aws_eks_cluster.dev.name
   addon_name               = "aws-ebs-csi-driver"
-  addon_version            = "v1.11.4-eksbuild.1"
+  addon_version            = "v1.15.1-eksbuild.1"
   service_account_role_arn = aws_iam_role.eks_ebs_csi_driver.arn
 }
-
 
 # Optional: only if you use your own KMS key to encrypt EBS volumes
 # TODO: replace arn:aws:kms:us-east-1:424432388155:key/7a8ea545-e379-4ac5-8903-3f5ae22ea847 with your KMS key id arn!

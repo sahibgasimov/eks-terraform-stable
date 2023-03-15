@@ -390,7 +390,7 @@ resource "aws_eks_node_group" "private-nodes" {
   } */
   launch_template {
   name    = aws_launch_template.dev.name
-  version = aws_launch_template.dev.default_version
+  version = aws_launch_template.dev.latest_version
 }
 
 
@@ -402,9 +402,12 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonDynamoDBFullAccess,
   ]
 }
-
-
 resource "aws_launch_template" "dev" {
+  name = "eks-with-disks"
+
+}
+
+/* resource "aws_launch_template" "dev" {
   name     = "${var.cluster_name}"
   block_device_mappings {
     device_name = "/dev/xvdb"
@@ -413,8 +416,6 @@ resource "aws_launch_template" "dev" {
       volume_type = var.volume_type
     }
   }
-    default_version = var.launch_template_version ? var.launch_template_version : 1
-
-}
-
-
+    /* image_id = var.image_id */
+    #default_version = var.launch_template_version ? var.launch_template_version : 1
+#}

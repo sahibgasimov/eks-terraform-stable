@@ -1,4 +1,3 @@
-
 variable "region" {}
 variable "environment" {}
 variable "domain" {}
@@ -10,8 +9,6 @@ variable "desired_size" {}
 variable "max_size" {}
 variable "min_size" {}
 variable "max_unavailable" {}
-variable "nodes_volume_size" {}
-variable "volume_type" {}
 variable "vpc_cidr" {}
 variable "private_subnet_1" {}
 variable "private_subnet_2" {}
@@ -19,4 +16,3 @@ variable "private_subnet_3" {}
 variable "public_subnet_1" {}
 variable "public_subnet_2" {}
 variable "public_subnet_3" {}
-variable "launch_template_version" {}
