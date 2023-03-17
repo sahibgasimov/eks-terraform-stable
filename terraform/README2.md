@@ -8,7 +8,7 @@ Terraform is an open-source infrastructure as a code (IAC) tool that allows to c
 
 In this tutorial, I will deploy a three-tier application in AWS using Terraform.
 
-![2](https://github.com/DhruvinSoni30/Terraform-AWS-3tier-Architecture/blob/main/2.png)
+![2](https://github.com/sahibgasimov/eks-terraform-stable/blob/module/terraform/alb_ingress_controller_external_dns.jpg)
 
 ### Prerequisites:
 
