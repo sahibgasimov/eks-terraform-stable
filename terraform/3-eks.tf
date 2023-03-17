@@ -64,7 +64,7 @@ resource "aws_eks_cluster" "dev" {
   }
   #allow control-plane logging
   enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
-  depends_on = [aws_iam_role_policy_attachment.dev-AmazonEKSClusterPolicy]
+  depends_on                = [aws_iam_role_policy_attachment.dev-AmazonEKSClusterPolicy]
 }
 
 # The log group name format is /aws/eks/<cluster-name>/cluster

@@ -389,9 +389,9 @@ resource "aws_eks_node_group" "private-nodes" {
     version = aws_launch_template.dev.latest_version
   } */
   launch_template {
-  name    = aws_launch_template.dev.name
-  version = aws_launch_template.dev.latest_version
-}
+    name    = aws_launch_template.dev.name
+    version = aws_launch_template.dev.latest_version
+  }
 
 
   depends_on = [
@@ -417,5 +417,5 @@ resource "aws_launch_template" "dev" {
     }
   }
     /* image_id = var.image_id */
-    #default_version = var.launch_template_version ? var.launch_template_version : 1
+#default_version = var.launch_template_version ? var.launch_template_version : 1
 #}

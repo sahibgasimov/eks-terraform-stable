@@ -1,5 +1,5 @@
 resource "aws_security_group" "dev" {
-  name = "${var.cluster_name}"
+  name = var.cluster_name
   egress = [
     {
       cidr_blocks      = ["0.0.0.0/0", ]
