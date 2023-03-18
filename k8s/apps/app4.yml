@@ -20,7 +20,7 @@ spec:
         app: echoserver
     spec:
       containers:
-      - image: bitwardenrs/server:latest #k8s.gcr.io/e2e-test-images/echoserver:2.5
+      - image: k8s.gcr.io/e2e-test-images/echoserver:2.5
         name: echoserver
         ports:
         - containerPort: 8080

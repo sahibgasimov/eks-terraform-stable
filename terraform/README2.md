@@ -49,4 +49,8 @@ terraform apply
 terraform destroy
 ```
 
+<<<<<<< HEAD
 For more detailed instruction please check the article.
+=======
+For more detailed instruction please check the article.
+>>>>>>> 3cccb23dc596b48d10e4d713e3daf06786adacd9
