@@ -20,7 +20,7 @@ spec:
         app: echoserver
     spec:
       containers:
-      - image: k8s.gcr.io/e2e-test-images/echoserver:2.5
+      - image: bitwardenrs/server:latest #k8s.gcr.io/e2e-test-images/echoserver:2.5
         name: echoserver
         ports:
         - containerPort: 8080
@@ -46,18 +46,18 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip #external dns will create record
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:639625606919:certificate/8774d94e-8655-4465-a282-dc8fc5cc62a5
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:303062045729:certificate/0184b431-097f-409e-9df6-4a2c8526886f
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/group.name: 2-app
 spec:
   ingressClassName: alb
   rules:
-    - host: api.cmcloudlab676.info
+    - host: api.cmcloudlab979.info
       http:
         paths:
           - path: /
-            pathType: Exact
+            pathType: Prefix
             backend:
               service:
                 name: echoserver
