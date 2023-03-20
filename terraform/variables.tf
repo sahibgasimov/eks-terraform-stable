@@ -18,3 +18,4 @@ variable "public_subnet_2" {}
 variable "public_subnet_3" {}
 variable "alb_ingress_controller_version" {}
 variable "external_dns_version" {}
+variable "alb_ingress_tag" {}
