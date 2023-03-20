@@ -346,14 +346,14 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonDynamoDBFullAccess" {
 #}
 
 resource "aws_eks_node_group" "private-nodes" {
-  cluster_name    = aws_eks_cluster.demo.name
-  node_group_name = "private-nodes"
+  cluster_name    = aws_eks_cluster.dev.name
+  node_group_name = "${var.cluster_name}-private-nodes"
   node_role_arn   = aws_iam_role.nodes.arn
-  
+
   subnet_ids = [
-    aws_subnet.private-us-east-1a.id,
-    aws_subnet.private-us-east-1b.id,
-    aws_subnet.private-us-east-1c.id
+    aws_subnet.private-1.id,
+    aws_subnet.private-2.id,
+    aws_subnet.private-3.id
   ]
 
   lifecycle {
@@ -362,16 +362,16 @@ resource "aws_eks_node_group" "private-nodes" {
     ignore_changes = [scaling_config[0].desired_size]
   }
   capacity_type  = "ON_DEMAND"
-  instance_types = ["t3.small"]
+  instance_types = ["${var.instance_types}"]
 
   scaling_config {
-    desired_size = 2
-    max_size     = 5
-    min_size     = 2
+    desired_size = var.desired_size
+    max_size     = var.max_size
+    min_size     = var.min_size
   }
 
   update_config {
-    max_unavailable = 1
+    max_unavailable = var.max_unavailable
   }
 
   labels = {
@@ -380,15 +380,19 @@ resource "aws_eks_node_group" "private-nodes" {
 
   # taint {
   #   key    = "team"
-  #   value  = "devops"
+  #   value  = "developers"
   #   effect = "NO_SCHEDULE"
   # }
-  
 
-   launch_template {
-     name    = aws_launch_template.eks-with-disks.name
-     version = aws_launch_template.eks-with-disks.latest_version
-   }
+  /* launch_template {
+    name    = aws_launch_template.dev.name
+    version = aws_launch_template.dev.latest_version
+  } */
+  launch_template {
+    name    = aws_launch_template.dev.name
+    version = aws_launch_template.dev.latest_version
+  }
+
 
   depends_on = [
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
@@ -396,31 +400,22 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
     aws_iam_role_policy_attachment.nodes-AmazonRoute53ReadOnlyAccess,
     aws_iam_role_policy_attachment.nodes-AmazonDynamoDBFullAccess,
-   # aws_iam_role_policy_attachment.nodes-alb_controller_iam_policy
   ]
-  
-
 }
-
-resource "aws_launch_template" "eks-with-disks" {
+resource "aws_launch_template" "dev" {
   name = "eks-with-disks"
-  
 
 }
 
-# resource "aws_launch_template" "eks-with-disks" {
-#   name = "eks-with-disks"
-
-#   key_name = "local-provisioner"
-
-#   block_device_mappings {
-#     device_name = "/dev/xvdb"
-
-#     ebs {
-#       volume_size = 50
-#       volume_type = "gp2"
-#     }
-#   }
-# }
-
-
+/* resource "aws_launch_template" "dev" {
+  name     = "${var.cluster_name}"
+  block_device_mappings {
+    device_name = "/dev/xvdb"
+    ebs {
+      volume_size = var.nodes_volume_size
+      volume_type = var.volume_type
+    }
+  }
+    /* image_id = var.image_id */
+#default_version = var.launch_template_version ? var.launch_template_version : 1
+#}

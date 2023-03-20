@@ -8,9 +8,9 @@ provider "aws" {
   alias  = "dns"
 }
 
-resource "aws_route53_zone" "default" {
+/* resource "aws_route53_zone" "default" {
   name = var.domain
-}
+} */
 
 module "cert" {
   source = "github.com/azavea/terraform-aws-acm-certificate"
@@ -20,9 +20,9 @@ module "cert" {
     aws.route53_account = aws.dns
   }
 
- domain_name                       = var.domain
- subject_alternative_names         = ["*.${var.domain}"]
- hosted_zone_id                    = "${aws_route53_zone.default.zone_id}"
+  domain_name                       = var.domain
+  subject_alternative_names         = ["*.${var.domain}"]
+  hosted_zone_id                    = var.hosted_zone_id
   validation_record_ttl             = "60"
   allow_validation_record_overwrite = true
 }
