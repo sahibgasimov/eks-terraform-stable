@@ -4,9 +4,9 @@
 This tutorial will guide you through the process of building an Amazon Elastic Kubernetes Service (EKS) cluster using Terraform and deploying AWS ALB and External DNS. By the end of this tutorial, you will have a fully functional EKS cluster running in your AWS account and will be able to deploy applications using your own domain.
 
 
-external_dns_version = "6.14.3"
-alb_ingress_controller_version = "1.4.8"
-alb_ingress_tag = "v2.4.7"
+- external_dns_version = "6.14.3"
+- alb_ingress_controller_version = "1.4.8"
+- alb_ingress_tag = "v2.4.7"
 Short instuction of the project.
 
 ## Table of Contents
