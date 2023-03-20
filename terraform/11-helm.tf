@@ -57,6 +57,7 @@ data "aws_caller_identity" "dev" {}
 
 data "aws_eks_cluster" "dev" {
   name = local.k8s.cluster
+  depends_on = [aws_eks_cluster.dev]
 }
 
 data "aws_eks_cluster_auth" "aws_iam_authenticator" {
