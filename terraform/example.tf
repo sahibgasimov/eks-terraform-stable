@@ -1,5 +1,5 @@
 module "eks" {
-source              =  "../"
+source              =  "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
 #### Cluster and Nodes ####
 cluster_name    = "dev"
 cluster_version = "1.24"
