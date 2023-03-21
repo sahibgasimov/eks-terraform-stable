@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-=======
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
+export AWS_ACCESS_KEY_ID=AKIAYQBG57W42ZX6CXFC
+export AWS_SECRET_ACCESS_KEY=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
 export AWS_DEFAULT_REGION=us-east-1
->>>>>>> 3cccb23dc596b48d10e4d713e3daf06786adacd9

@@ -12,8 +12,8 @@ min_size        = 2
 max_unavailable = 1
 #### Route53 Domain ####
 region         = "us-east-1"
-domain         = "cmcloudlab0461.info"
-hosted_zone_id = "Z076923618XHSNXGW1T50"
+domain         = "cmcloudlab836.info"
+hosted_zone_id = "Z07707852PSAR6X8Y42SM"
 ##### Networking #####
 vpc_cidr         = "10.0.0.0/16"
 private_subnet_1 = "10.0.0.0/19"
@@ -23,6 +23,5 @@ public_subnet_1  = "10.0.64.0/19"
 public_subnet_2  = "10.0.96.0/19"
 public_subnet_3  = "10.0.160.0/19"
 ##### ALB Ingress Controller and External DNS #####
-external_dns_version = "6.14.3"
-alb_ingress_controller_version = "1.4.8"
+
 }
