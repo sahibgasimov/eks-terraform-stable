@@ -1,3 +1,3 @@
 output "SomeOutput" {
-  value = aws_eks_cluster.dev.aws_subnet.private-1.id
+  value = module.aws_subnet.private-1.id
 }
