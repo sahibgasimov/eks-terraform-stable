@@ -14,6 +14,8 @@ Short instuction of the project.
 - [Create kubeconfig file](#documentation)
 - [Deploying ALB Ingress Constroller and External DNS](#contributing)
 - [Destroy](#destroy)
+- [Application Deployment](#application)
+- [Annotations](#annotations)
 
 ## Installation and Usage Example 
 ```
@@ -63,7 +65,7 @@ kubectl get pods -n kube-system #Check if the controller is running.
 terraform destroy
 ```
 
-Application Deployment
+## Application Deployment Example
 
 ```
 ---
