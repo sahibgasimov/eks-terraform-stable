@@ -63,3 +63,83 @@ kubectl get pods -n kube-system #Check if the controller is running.
 terraform destroy
 ```
 
+Application Deployment
+
+```
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: dev
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      containers:
+      - image: nginx
+        name: dev
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev
+  namespace: dev
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  type: ClusterIP
+  selector:
+    app: dev
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echoserver
+  namespace: dev
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip #external dns will create record
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:303062045729:certificate/0184b431-097f-409e-9df6-4a2c8526886f
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/group.name: 2-app
+spec:
+  ingressClassName: alb
+  rules:
+    - host: dev.yourdomain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev
+                port:
+                  number: 8080
+```
+
+Ingress annotations 
+```
+alb.ingress.kubernetes.io/scheme: internet-facing
+alb.ingress.kubernetes.io/target-type: ip #external dns will create record
+alb.ingress.kubernetes.io/certificate-arn: <insert your certificate arn >
+alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+alb.ingress.kubernetes.io/ssl-redirect: '443'
+alb.ingress.kubernetes.io/group.name: dev
+```
+
