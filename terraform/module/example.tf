@@ -25,3 +25,7 @@ public_subnet_3  = "10.0.160.0/19"
 ##### ALB Ingress Controller and External DNS #####
 
 }
+  
+output "vpc_id" {
+  value = module.eks.aws_vpc.main.id
+    }
