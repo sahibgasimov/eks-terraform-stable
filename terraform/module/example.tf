@@ -27,5 +27,5 @@ public_subnet_3  = "10.0.160.0/19"
 }
   
 output "vpc_id" {
-  value = module.eks.aws_vpc.main.id
+  value = module.aws_vpc.main.id
     }
