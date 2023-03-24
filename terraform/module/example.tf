@@ -23,9 +23,9 @@ public_subnet_1  = "10.0.64.0/19"
 public_subnet_2  = "10.0.96.0/19"
 public_subnet_3  = "10.0.160.0/19"
 ##### ALB Ingress Controller and External DNS #####
-
+external_dns = "6.14.3"
 }
   
-output "vpc_id" {
-  value = aws_vpc.main.id
-    }
+output "eks" {
+  value = module.eks.eks
+}
