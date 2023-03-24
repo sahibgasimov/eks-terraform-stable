@@ -17,7 +17,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
-  version    = "1.4.8"
+  version    = var.alb_ingress
 
   set {
     name  = "clusterName"

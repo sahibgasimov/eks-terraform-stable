@@ -24,6 +24,7 @@ public_subnet_2  = "10.0.96.0/19"
 public_subnet_3  = "10.0.160.0/19"
 ##### ALB Ingress Controller and External DNS #####
 external_dns = "6.14.3"
+alb_ingress = "1.4.8"
 }
   
 output "eks" {
