@@ -1,16 +1,20 @@
 module "eks" {
   source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
-  #### Cluster and Nodes ####
+  #### EKS Cluster ####
   cluster_name    = "dev"
   cluster_version = "1.24"
   environment     = "dev"
+  ##### ALB Ingress Controller and External DNS #####
+  external_dns          = "6.14.3"
+  alb_ingress           = "1.4.8"
+  alb_ingress_image_tag = "v2.4.7"
+  ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
-  #autoscaling desired instance size 
   desired_size    = 2
   max_size        = 5
   min_size        = 2
   max_unavailable = 1
-  #### Route53 Domain ####
+  ##### Route53 Domain #####
   region         = "us-east-1"
   domain         = "cmcloudlab1570.info"
   hosted_zone_id = "Z0309648A8LOIJ7WLB5I"
@@ -22,12 +26,7 @@ module "eks" {
   public_subnet_1  = "10.0.64.0/19"
   public_subnet_2  = "10.0.96.0/19"
   public_subnet_3  = "10.0.160.0/19"
-  ##### ALB Ingress Controller and External DNS #####
-  external_dns    = "6.14.3"
-  alb_ingress     = "1.4.8"
-  alb_ingress_image_tag = "v2.4.7"
 }
-
 output "eks" {
   value = module.eks.eks
 }
