@@ -74,7 +74,7 @@ resource "helm_release" "external-dns" {
   namespace  = "kube-system"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
-  version    = "6.14.3"
+  version    = var.external_dns
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
