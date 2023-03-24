@@ -1,58 +1,152 @@
+## Building an EKS Cluster with ALB Ingress Controller and External DNS using Terraform
 
-aws eks --region us-east-1 update-kubeconfig --name demo
+This tutorial will guide you through the process of building an Amazon Elastic Kubernetes Service (EKS) cluster using Terraform and deploying AWS ALB and External DNS. By the end of this tutorial, you will have a fully functional EKS cluster running in your AWS account and will be able to deploy applications using your own domain.
 
-#### Kube-Metrics 
- 
- kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
+- External dns version = "6.14.3"
+- Alb Ingress Controller Version = "1.4.8"
+- Alb Ingress Tag = "v2.4.7"
 
- #### Cert Manager
+Short instuction of the project.
 
- kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.crds.yaml
+## Table of Contents
 
- ### check your usedid account and role
-aws sts get-caller-identity
+- [Installation and Usage](#installation)
+- [Create kubeconfig file](#documentation)
+- [Deploying ALB Ingress Constroller and External DNS](#contributing)
+- [Destroy](#destroy)
+- [Application Deployment](#application)
+- [Annotations](#annotations)
 
-watch -n 1 -t kubectl get pods
-###  Check logs 
-kubectl logs -l app=cluster-autoscaler -n kube-system -f
-
-
-### EKS cluster auto scaling demo
-Verify that AG (aws autoscaling group) has required tags:
+## Installation and Usage Example 
 ```
-k8s.io/cluster-autoscaler/<cluster-name> : owned
-k8s.io/cluster-autoscaler/enabled : TRUE
- ```
-Split the terminal screen. In the first window run:
+module "eks" {
+source              =  "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
+#### Cluster and Nodes ####
+cluster_name    = "dev"
+cluster_version = "1.24"
+environment     = "dev"
+instance_types  = "t3.small"
+#autoscaling desired instance size 
+desired_size    = 2
+max_size        = 5
+min_size        = 2
+max_unavailable = 1
+#### Route53 Domain ####
+region         = "us-east-1"
+domain         = "cmcloudlab1756.info"
+hosted_zone_id = "Z045513210638OYC8T86B"
+##### Networking #####
+vpc_cidr         = "10.0.0.0/16"
+private_subnet_1 = "10.0.0.0/19"
+private_subnet_2 = "10.0.32.0/19"
+private_subnet_3 = "10.0.128.0/19"
+public_subnet_1  = "10.0.64.0/19"
+public_subnet_2  = "10.0.96.0/19"
+public_subnet_3  = "10.0.160.0/19"
+}
 ```
-watch -n 1 -t kubectl get pods
- ```
-In the second window run:
+Deploy module 
 ```
-watch -n 1 -t kubectl get nodes
+terraform init 
+terraform apply
 ```
-Now, to trigger autoscaling, increase replica for nginx deployment from 1 to 5.
+
+## Create kubeconfig file
+
 ```
-kubectl apply -f k8s/deployment.yaml
- ```
-### HELM Install
+aws eks --region us-east-1 update-kubeconfig --name your_cluster_name
+kubectl get nodes
+kubectl get pods -n kube-system #Check if the controller is running.
+```
 
- curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
- chmod 700 get_helm.sh
- ./get_helm.sh
+## Destroy
 
+```
+terraform destroy
+```
 
-### Useful Links
+## Application Deployment Example
 
-https://antonputra.com/terraform/how-to-create-eks-cluster-using-terraform/#create-iam-oidc-provider-eks-using-terraform
+```
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: dev
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      containers:
+      - image: nginx
+        name: dev
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev
+  namespace: dev
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  type: ClusterIP
+  selector:
+    app: dev
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echoserver
+  namespace: dev
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip #external dns will create record
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:303062045729:certificate/0184b431-097f-409e-9df6-4a2c8526886f
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/group.name: 2-app
+spec:
+  ingressClassName: alb
+  rules:
+    - host: dev.yourdomain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev
+                port:
+                  number: 8080
+```
 
-https://www.youtube.com/watch?v=MZyrxzb7yAU&list=PLiMWaCMwGJXkeBzos8QuUxiYT6j8JYGE5&index=8&ab_channel=AntonPutra
+Ingress annotations 
+```
+alb.ingress.kubernetes.io/scheme: internet-facing
+alb.ingress.kubernetes.io/target-type: ip #external dns will create record
+alb.ingress.kubernetes.io/certificate-arn: <insert your certificate arn >
+alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+alb.ingress.kubernetes.io/ssl-redirect: '443'
+alb.ingress.kubernetes.io/group.name: dev
+```
 
-https://www.youtube.com/watch?v=EGdN21F2Jfw&ab_channel=AntonPutra
-How to Add IAM User and IAM Role to AWS EKS Cluster?
-
-https://antonputra.com/kubernetes/add-iam-user-and-iam-role-to-eks/
-How to Add IAM User and IAM Role to AWS EKS Cluster?¶
-
-https://www.youtube.com/watch?v=MZyrxzb7yAU&t=438s&ab_channel=AntonPutra
-How to Create EKS Cluster Using Terraform + IAM Roles for Service Accounts & EKS Cluster Autoscaler
+```
+aws configure --profile acg
+export AWS_PROFILE=acg
+aws sts get-caller-identity 
+```
