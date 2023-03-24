@@ -12,8 +12,8 @@ min_size        = 2
 max_unavailable = 1
 #### Route53 Domain ####
 region         = "us-east-1"
-domain         = "cmcloudlab836.info"
-hosted_zone_id = "Z07707852PSAR6X8Y42SM"
+domain         = "cmcloudlab844.info"
+hosted_zone_id = "Z07775702ZJVEF14VCD5F"
 ##### Networking #####
 vpc_cidr         = "10.0.0.0/16"
 private_subnet_1 = "10.0.0.0/19"

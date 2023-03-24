@@ -145,3 +145,8 @@ alb.ingress.kubernetes.io/ssl-redirect: '443'
 alb.ingress.kubernetes.io/group.name: dev
 ```
 
+```
+aws configure --profile acg
+export AWS_PROFILE=acg
+aws sts get-caller-identity 
+```

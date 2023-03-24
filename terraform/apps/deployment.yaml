@@ -24,7 +24,7 @@ spec:
       - image: nginx
         name: dev
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -33,7 +33,7 @@ metadata:
   namespace: dev
 spec:
   ports:
-  - port: 8080
+  - port: 80
     protocol: TCP
   type: ClusterIP
   selector:
@@ -47,14 +47,14 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip #external dns will create record
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:003507632296:certificate/c1c67f21-e9a9-48bf-a752-87c65a48c44f
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:122801955611:certificate/ed92c4d2-5ad8-4821-a947-f60348846ae2
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/group.name: 2-app
+    alb.ingress.kubernetes.io/group.name: dev
 spec:
   ingressClassName: alb
   rules:
-    - host: dev.yourdomain.com
+    - host: dev.your_domain_name
       http:
         paths:
           - path: /
@@ -63,4 +63,4 @@ spec:
               service:
                 name: dev
                 port:
-                  number: 8080
+                  number: 80
