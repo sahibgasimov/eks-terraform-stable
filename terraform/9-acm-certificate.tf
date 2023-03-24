@@ -8,10 +8,6 @@ provider "aws" {
   alias  = "dns"
 }
 
-/* resource "aws_route53_zone" "default" {
-  name = var.domain
-} */
-
 module "cert" {
   source = "github.com/azavea/terraform-aws-acm-certificate"
 

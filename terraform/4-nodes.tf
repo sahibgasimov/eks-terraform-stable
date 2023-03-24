@@ -325,18 +325,8 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 }
 
 
-resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2RoleforSSM" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
-  role       = aws_iam_role.nodes.name
-}
-# giving nodes permission to access route53
-resource "aws_iam_role_policy_attachment" "nodes-AmazonRoute53ReadOnlyAccess" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53ReadOnlyAccess"
-  role       = aws_iam_role.nodes.name
-}
-# giving nodes full permission to DynamoDB
-resource "aws_iam_role_policy_attachment" "nodes-AmazonDynamoDBFullAccess" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+resource "aws_iam_role_policy_attachment" "nodes-AmazonSSMManagedInstanceCore" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonSSMManagedInstanceCore "
   role       = aws_iam_role.nodes.name
 }
 
@@ -384,10 +374,6 @@ resource "aws_eks_node_group" "private-nodes" {
   #   effect = "NO_SCHEDULE"
   # }
 
-  /* launch_template {
-    name    = aws_launch_template.dev.name
-    version = aws_launch_template.dev.latest_version
-  } */
   launch_template {
     name    = aws_launch_template.dev.name
     version = aws_launch_template.dev.latest_version
@@ -398,24 +384,9 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
-    aws_iam_role_policy_attachment.nodes-AmazonRoute53ReadOnlyAccess,
-    aws_iam_role_policy_attachment.nodes-AmazonDynamoDBFullAccess,
+    aws_iam_role_policy_attachment.nodes-AmazonSSMManagedInstanceCore,
   ]
 }
 resource "aws_launch_template" "dev" {
   name = "eks-with-disks"
-
 }
-
-/* resource "aws_launch_template" "dev" {
-  name     = "${var.cluster_name}"
-  block_device_mappings {
-    device_name = "/dev/xvdb"
-    ebs {
-      volume_size = var.nodes_volume_size
-      volume_type = var.volume_type
-    }
-  }
-    /* image_id = var.image_id */
-#default_version = var.launch_template_version ? var.launch_template_version : 1
-#}
