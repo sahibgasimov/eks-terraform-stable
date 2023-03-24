@@ -1,68 +1,159 @@
-## eks-terraform-stable
+## Building an EKS Cluster with ALB Ingress Controller and External DNS using Terraform
 
-### Pre-requsites on local machine
-- aws-cli
-- terraform
-- helm
+This tutorial will guide you through the process of building an Amazon Elastic Kubernetes Service (EKS) cluster using Terraform and deploying AWS ALB and External DNS. By the end of this tutorial, you will have a fully functional EKS cluster running in your AWS account and will be able to deploy applications using your own domain.
 
-### This terraform code will create AWS EKS Cluster
-1. VPC
-2. Internet Gateway 
-3. Subnets 3 private 3 public
-4. Nat Gateway
-5. Routes/Route Associations 
-6. AWS EKS Cluster
-7. Nodes
-8. AWS IAM OpenID
-9. IAM Roles and  Policies for cluster
-10. IAM Policy Autoscaler 
-11. Security Group
-12. Bastion Host for EKS Cluster
-13. EBS CSI Driver 
-14. ACM Cert for ALB/external DNS
+Short instuction of the project.
 
-### To create kubeconfig
+## Table of Contents
 
-aws eks --region us-east-1 update-kubeconfig --name demo
+- [Installation and Usage](#installation)
+- [Create kubeconfig file](#documentation)
+- [Deploying ALB Ingress Constroller and External DNS](#contributing)
+- [Destroy](#destroy)
+- [Application Deployment](#application)
+- [Annotations](#annotations)
 
-##Additional tooling
+## Installation and Usage Example 
 
-### Deploy and Access the Kubernetes Dashboard
+Configure AWS Credentials 
 
-https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
-
-### K8S CRD
-The CRDs provide the necessary metadata and schema information to the Kubernetes API server so that it can properly handle Ingress resources.
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+aws configure --profile acg
+export AWS_PROFILE=acg
+aws sts get-caller-identity 
 ```
-### Create external dns 
-```
-1. kubectl apply -f k8s/external-dns.yml  
-2. kubectl apply -f k8s/nginx-app-test-extenaldns.yml  #test external dns on nginx app, you need also to create A record for alb and modify in the app before launching
-Note: external-dns allow policy was given in nodes.tf file 
-```
-Reference: https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
- ### Create kube-metrics 
- ```
- kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.2/components.yaml
-```
-### Installing kubernetes Metrics Server
-https://docs.aws.amazon.com/eks/latest/userguide/metrics-server.html
-```
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-kubectl get deployment metrics-server -n kube-system
-```
-### Prometheus 
-https://docs.aws.amazon.com/eks/latest/userguide/prometheus.html
-```
-kubectl create namespace prometheus
 
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+```
+module "eks" {
+  source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
+  #### Cluster and Nodes ####
+  cluster_name    = "dev"
+  cluster_version = "1.24"
+  environment     = "dev"
+  instance_types  = "t3.small"
+  ##### ALB Ingress Controller and External DNS #####
+  external_dns    = "6.14.3"
+  alb_ingress     = "1.4.8"
+  alb_ingress_image_tag = "v2.4.7"
+  ##### Autoscaling desired instance size #####
+  desired_size    = 2
+  max_size        = 5
+  min_size        = 2
+  max_unavailable = 1
+  ##### Route53 Domain #####
+  region         = "us-east-1"
+  domain         = "cmcloudlab1570.info"
+  hosted_zone_id = "Z0309648A8LOIJ7WLB5I"
+  ##### Networking #####
+  vpc_cidr         = "10.0.0.0/16"
+  private_subnet_1 = "10.0.0.0/19"
+  private_subnet_2 = "10.0.32.0/19"
+  private_subnet_3 = "10.0.128.0/19"
+  public_subnet_1  = "10.0.64.0/19"
+  public_subnet_2  = "10.0.96.0/19"
+  public_subnet_3  = "10.0.160.0/19"
+}
+output "eks" {
+  value = module.eks.eks
+}
 
-helm upgrade -i prometheus prometheus-community/prometheus \
-    --namespace prometheus \
-    --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
-    
-kubectl get pods -n prometheus
+```
+Deploy module 
+```
+terraform init 
+terraform apply
+```
+
+## Create kubeconfig file
+
+```
+aws eks --region us-east-1 update-kubeconfig --name your_cluster_name
+kubectl get nodes
+kubectl get pods -n kube-system #Check if the controller is running.
+```
+
+## Destroy
+
+```
+terraform destroy
+```
+
+## Application Deployment Example
+
+```
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: dev
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      containers:
+      - image: nginx
+        name: dev
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev
+  namespace: dev
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  type: ClusterIP
+  selector:
+    app: dev
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dev
+  namespace: dev
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip #external dns will create record
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:303062045729:certificate/0184b431-097f-409e-9df6-4a2c8526886f
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/group.name: dev
+spec:
+  ingressClassName: alb
+  rules:
+    - host: dev.yourdomain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev
+                port:
+                  number: 80
+```
+
+Ingress annotations 
+```
+alb.ingress.kubernetes.io/scheme: internet-facing
+alb.ingress.kubernetes.io/target-type: ip #external dns will create record
+alb.ingress.kubernetes.io/certificate-arn: <insert your certificate arn >
+alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+alb.ingress.kubernetes.io/ssl-redirect: '443'
+alb.ingress.kubernetes.io/group.name: dev
 ```
