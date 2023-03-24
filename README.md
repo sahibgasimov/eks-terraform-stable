@@ -1,6 +1,7 @@
 ## Building an EKS Cluster with ALB Ingress Controller and External DNS using Terraform
 
 This tutorial will guide you through the process of building an Amazon Elastic Kubernetes Service (EKS) cluster using Terraform and deploying AWS ALB and External DNS. By the end of this tutorial, you will have a fully functional EKS cluster running in your AWS account and will be able to deploy applications using your own domain.
+![alt text](https://github.com/sahibgasimov/eks-terraform-stable/blob/main/alb_ingress_controller.jpg)
 
 Short instuction of the project.
 
