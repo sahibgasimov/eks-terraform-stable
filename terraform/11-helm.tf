@@ -26,9 +26,9 @@ resource "helm_release" "aws-load-balancer-controller" {
 
   set {
     name  = "image.tag"
-    value = "v2.4.7"
+    value = var.alb_ingress_tag
   }
-#Sahib2018@@!
+  #Sahib2018@@!
   set {
     name  = "serviceAccount.name"
     value = "aws-load-balancer-controller"
@@ -58,7 +58,7 @@ locals {
 data "aws_caller_identity" "dev" {}
 
 data "aws_eks_cluster" "dev" {
-  name = local.k8s.cluster
+  name       = local.k8s.cluster
   depends_on = [aws_eks_cluster.dev]
 }
 
