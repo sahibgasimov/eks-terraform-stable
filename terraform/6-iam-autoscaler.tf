@@ -46,4 +46,3 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_autoscaler_attach" {
   role       = aws_iam_role.eks_cluster_autoscaler.name
   policy_arn = aws_iam_policy.eks_cluster_autoscaler.arn
 }
-

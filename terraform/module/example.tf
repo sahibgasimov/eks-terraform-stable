@@ -12,8 +12,8 @@ module "eks" {
   max_unavailable = 1
   #### Route53 Domain ####
   region         = "us-east-1"
-  domain         = "cmcloudlab844.info"
-  hosted_zone_id = "Z07775702ZJVEF14VCD5F"
+  domain         = "cmcloudlab1570.info"
+  hosted_zone_id = "Z0309648A8LOIJ7WLB5I"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
