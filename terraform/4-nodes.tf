@@ -388,5 +388,5 @@ resource "aws_eks_node_group" "private-nodes" {
   ]
 }
 resource "aws_launch_template" "dev" {
-  name = "eks-with-disks"
+  name = "eks"
 }
