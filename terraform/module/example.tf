@@ -25,7 +25,7 @@ module "eks" {
   ##### ALB Ingress Controller and External DNS #####
   external_dns    = "6.14.3"
   alb_ingress     = "1.4.8"
-  alb_ingress_tag = "v2.4.7"
+  alb_ingress_image_tag = "v2.4.7"
 }
 
 output "eks" {

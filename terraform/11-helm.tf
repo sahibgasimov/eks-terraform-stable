@@ -26,7 +26,7 @@ resource "helm_release" "aws-load-balancer-controller" {
 
   set {
     name  = "image.tag"
-    value = var.alb_ingress_tag
+    value = var.alb_ingress_image_tag
   }
   #Sahib2018@@!
   set {
