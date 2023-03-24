@@ -34,51 +34,6 @@ resource "aws_eks_addon" "csi_driver" {
 
   depends_on = [
     aws_eks_cluster.dev
+    aws_iam_role.nodes
   ]
 }
-
-# Optional: only if you use your own KMS key to encrypt EBS volumes
-# TODO: replace arn:aws:kms:us-east-1:424432388155:key/7a8ea545-e379-4ac5-8903-3f5ae22ea847 with your KMS key id arn!
-# resource "aws_iam_policy" "eks_ebs_csi_driver_kms" {
-#   name = "KMS_Key_For_Encryption_On_EBS"
-
-#   policy = <<POLICY
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Action": [
-#         "kms:CreateGrant",
-#         "kms:ListGrants",
-#         "kms:RevokeGrant"
-#       ],
-#       "Resource": ["arn:aws:kms:us-east-1:424432388155:key/7a8ea545-e379-4ac5-8903-3f5ae22ea847"],
-#       "Condition": {
-#         "Bool": {
-#           "kms:GrantIsForAWSResource": "true"
-#         }
-#       }
-#     },
-#     {
-#       "Effect": "Allow",
-#       "Action": [
-#         "kms:Encrypt",
-#         "kms:Decrypt",
-#         "kms:ReEncrypt*",
-#         "kms:GenerateDataKey*",
-#         "kms:DescribeKey"
-#       ],
-#       "Resource": ["arn:aws:kms:us-east-1:424432388155:key/7a8ea545-e379-4ac5-8903-3f5ae22ea847"]
-#     }
-#   ]
-# }
-# POLICY
-# }
-
-# resource "aws_iam_role_policy_attachment" "amazon_ebs_csi_driver_kms" {
-#   role       = aws_iam_role.eks_ebs_csi_driver.name
-#   policy_arn = aws_iam_policy.eks_ebs_csi_driver_kms.arn
-# }
-
-

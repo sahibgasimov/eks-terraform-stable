@@ -34,10 +34,6 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonSSMManagedInstanceCore" {
   role       = aws_iam_role.nodes.name
 }
 
-#resource "aws_iam_role_policy_attachment" "nodes-alb_controller_iam_policy" {
-#  policy_arn = aws_iam_policy.alb_controller_iam_policy.arn
-#  role       = aws_iam_role.nodes.name
-#}
 
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.dev.name
