@@ -47,14 +47,14 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip #external dns will create record
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:122801955611:certificate/ed92c4d2-5ad8-4821-a947-f60348846ae2
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:904631723595:certificate/64b4c2ae-41d5-4d5b-a376-e1ca4f74a464
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/group.name: dev
 spec:
   ingressClassName: alb
   rules:
-    - host: dev.your_domain_name
+    - host: dev.cmcloudlab1723.info
       http:
         paths:
           - path: /
