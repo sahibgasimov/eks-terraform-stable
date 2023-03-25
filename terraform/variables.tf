@@ -19,3 +19,4 @@ variable "public_subnet_3" {}
 variable "external_dns" {}
 variable "alb_ingress" {}
 variable "alb_ingress_image_tag" {}
+variable "csi_driver" {}

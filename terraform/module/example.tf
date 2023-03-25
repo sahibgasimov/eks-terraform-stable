@@ -8,6 +8,7 @@ module "eks" {
   external_dns          = "6.14.3"
   alb_ingress           = "1.4.8"
   alb_ingress_image_tag = "v2.4.7"
+  csi_driver = "v1.15.1-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
   desired_size    = 2
@@ -16,8 +17,8 @@ module "eks" {
   max_unavailable = 1
   ##### Route53 Domain #####
   region         = "us-east-1"
-  domain         = "cmcloudlab1752.info"
-  hosted_zone_id = "Z02830862ZZC614MA4ZSQ"
+  domain         = "cmcloudlab1723.info"
+  hosted_zone_id = "Z06905353M1B7BVE48CCA"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
