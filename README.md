@@ -32,10 +32,10 @@ module "eks" {
   cluster_version = "1.24"
   environment     = "dev"
   ##### ALB Ingress Controller and External DNS #####
-  external_dns          = "6.14.3"
-  alb_ingress           = "1.4.8"
-  alb_ingress_image_tag = "v2.4.7"
-  csi_driver = "v1.15.1-eksbuild.1"
+  external_dns          = "6.20.3"
+  alb_ingress           = "1.5.3"
+  alb_ingress_image_tag = "v2.5.2"
+  csi_driver = "v1.19.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
   desired_size    = 2
