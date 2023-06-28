@@ -22,6 +22,12 @@ Configure AWS Credentials
 aws configure --profile acg
 export AWS_PROFILE=acg
 aws sts get-caller-identity 
+
+or
+
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
+
 ```
 
 ```
