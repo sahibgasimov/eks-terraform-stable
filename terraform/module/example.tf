@@ -1,5 +1,6 @@
 module "eks" {
-  source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
+  source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main" 
+  profile = "acloudguru"
   #### EKS Cluster ####
   cluster_name    = "dev"
   cluster_version = "1.24"
