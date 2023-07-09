@@ -94,7 +94,7 @@ ingress:
     alb.ingress.kubernetes.io/group.name: dev
   paths: ["/"] # There's no need to route specifically to the pods-- we have an nginx deployed that handles routing
   hosts:
-    - cost-analyzer.local
+    - prod.cmcloudlab551.info
   tls: []
   #  - secretName: cost-analyzer-tls
   #    hosts:
