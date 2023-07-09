@@ -229,6 +229,13 @@ resource "aws_iam_policy" "aws_load_balancer_controller" {
             ],
             "Resource": "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
         },
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "elasticloadbalancing:AddTags"
+            ],
         {
             "Effect": "Allow",
             "Action": [
