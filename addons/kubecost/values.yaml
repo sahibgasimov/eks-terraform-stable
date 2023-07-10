@@ -184,3 +184,5 @@ prometheus:
 
 reporting:
   productAnalytics: false
+
+kubecostToken: #"YXJhZGVyb29AeWFob28uY29txm343yadf98"
