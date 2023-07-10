@@ -3,7 +3,6 @@
 
 ##### Before setting up KubeCost  I'd recommend you to go through my previous article where I comprehensively describe setting up an AWS EKS cluster with an ALB Ingress Controller using Terraform. This will give you the necessary foundation to follow along with this guide.
 
-https://medium.com/@sahibgasimov/terraform-mastery-deploying-eks-cluster-custom-module-with-alb-ingress-controller-and-external-dns-9fe328de9f95
 
 ## Terraform EKS with Kubecost Addon
 
