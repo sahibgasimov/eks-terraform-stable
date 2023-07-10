@@ -26,8 +26,9 @@ git clone https://github.com/sahibgasimov/eks-terraform-stable.git
 
 2. Navigate to the `addons/kubecost` directory:
 
+```
 cd eks-terraform-stable/addons/kubecost
-
+```
 
 3. Customize your configurations by editing `values.yaml` and `terraform.tfvars` as per your requirements.
 
