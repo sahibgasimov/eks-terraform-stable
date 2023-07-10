@@ -46,7 +46,9 @@ terraform plan
 
 6. Apply the configuration:
 
-```terraform apply```
+```
+terraform apply
+```
 
 
 ## Configuration
