@@ -2,7 +2,7 @@ module "eks" {
   source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main" 
   #### EKS Cluster ####
   cluster_name    = "dev"
-  cluster_version = "1.25"
+  cluster_version = "1.26"
   environment     = "dev"
   ##### ALB Ingress Controller and External DNS #####
   external_dns          = "6.20.3"
@@ -17,8 +17,8 @@ module "eks" {
   max_unavailable = 1
   ##### Route53 Domain #####
   region         = "us-east-1"
-  domain         = "cmcloudlab1723.info"
-  hosted_zone_id = "Z06905353M1B7BVE48CCA"
+  domain         = "cmcloudlab1626.info"
+  hosted_zone_id = "Z02775881FI0DIF13QOF5"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
