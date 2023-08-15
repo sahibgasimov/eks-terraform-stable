@@ -35,7 +35,7 @@ module "eks" {
   source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
   #### EKS Cluster ####
   cluster_name    = "dev"
-  cluster_version = "1.24"
+  cluster_version = "1.26"
   environment     = "dev"
   ##### ALB Ingress Controller and External DNS #####
   external_dns          = "6.20.3"
