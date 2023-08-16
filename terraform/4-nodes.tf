@@ -77,8 +77,8 @@ resource "aws_eks_node_group" "private-nodes" {
   launch_template {
     name    = aws_launch_template.dev.name
     version = aws_launch_template.dev.latest_version
-
   }
+
 
 
   /* depends_on = [
