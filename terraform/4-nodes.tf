@@ -88,13 +88,27 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonSSMManagedInstanceCore,
   ] */
 }
-resource "aws_launch_template" "dev" {
-  name = "eks"
 
-tag_specifications {
+
+resource "aws_launch_template" "dev" {
+  count = 2
+
+  name = "eks"
+  instance_type = "t2.micro"
+
+  block_device_mappings {
+    device_name = "/dev/sda1"
+    ebs {
+      volume_size = 10
+      volume_type = "gp3"
+    }
+  }
+
+  tag_specifications {
     resource_type = "instance"
     tags = {
       Name = "node-${count.index + 1}"
     }
   }
 }
+
