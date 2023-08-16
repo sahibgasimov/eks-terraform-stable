@@ -75,7 +75,7 @@ resource "aws_eks_node_group" "private-nodes" {
   # }
 
   launch_template {
-    name    = aws_launch_template.dev.name
+    name    = aws_launch_template.dev[count.index]
     version = aws_launch_template.dev.latest_version
   }
 
