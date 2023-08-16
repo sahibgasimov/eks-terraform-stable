@@ -91,6 +91,20 @@ resource "aws_eks_node_group" "private-nodes" {
 }
 
 
+
+
 resource "aws_launch_template" "dev" {
-  name = "eks"
+  name = "${aws_eks_cluster.dev.name}.launch-template"
+  image_id               = "ami-053b0d53c279acc90"
+  instance_type          = "t3.small"
+  update_default_version = true
+
+  #key_name = ""
+
+    tags = {
+
+      Name = "${var.cluster_name}-private-nodes"
 }
+  }
+
+
