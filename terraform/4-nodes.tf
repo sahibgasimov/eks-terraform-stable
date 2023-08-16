@@ -77,6 +77,7 @@ resource "aws_eks_node_group" "private-nodes" {
   launch_template {
     name    = aws_launch_template.dev.name
     version = aws_launch_template.dev.latest_version
+
   }
 
 
@@ -89,4 +90,11 @@ resource "aws_eks_node_group" "private-nodes" {
 }
 resource "aws_launch_template" "dev" {
   name = "eks"
+
+tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "node-${count.index + 1}"
+    }
+  }
 }
