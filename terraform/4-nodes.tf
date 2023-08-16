@@ -111,7 +111,7 @@ resource "aws_launch_template" "dev" {
     resource_type = "instance"
 
     tags = {
-      Name                        = aws_eks_node_group.private-nodes.node_group_name
+      Name                        = "${aws_eks_node_group.private-nodes.node_group_name}"
     }
   }
 
