@@ -107,13 +107,6 @@ resource "aws_launch_template" "dev" {
     }
   }
 
-  tag_specifications {
-    resource_type = "instance"
 
-    tags = {
-
-      Name = "-private-nodes"
-}
-  }
 
 }
