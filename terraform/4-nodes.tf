@@ -101,6 +101,14 @@ resource "aws_launch_template" "dev" {
 
   #key_name = ""
 
+  block_device_mappings {
+    device_name = "/dev/sda1"
+
+    ebs {
+      volume_size = 20
+    }
+  }
+
     tags = {
 
       Name = "${var.cluster_name}-private-nodes"
