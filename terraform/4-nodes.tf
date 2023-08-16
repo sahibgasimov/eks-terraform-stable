@@ -92,21 +92,5 @@ resource "aws_eks_node_group" "private-nodes" {
 
 
 resource "aws_launch_template" "dev" {
-  name = "launch-template"
-  image_id               = "ami-053b0d53c279acc90"
-  instance_type          = "t3.small"
-  update_default_version = true
-
-  #key_name = ""
-
-  block_device_mappings {
-    device_name = "/dev/sda1"
-
-    ebs {
-      volume_size = 20
-    }
-  }
-
-
-
+  name = "eks"
 }
