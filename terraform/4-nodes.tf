@@ -92,12 +92,12 @@ resource "aws_eks_node_group" "private-nodes" {
 
 
 resource "aws_launch_template" "dev" {
-  image_id               = data.aws_ssm_parameter.cluster.value
+  image_id               = "ami-053b0d53c279acc90"
   instance_type          = "t3.small"
   name                   = ${aws_eks_cluster.dev.name}.launch-template"
   update_default_version = true
 
-  key_name = "eks-test"
+  #key_name = ""
 
   block_device_mappings {
     device_name = "/dev/sda1"
