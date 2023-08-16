@@ -106,6 +106,7 @@ resource "aws_launch_template" "dev" {
 
     ebs {
       volume_size = 20
+      volume_type = "gp3"
     }
   }
 
