@@ -95,7 +95,7 @@ resource "aws_eks_node_group" "private-nodes" {
 
 resource "aws_launch_template" "dev" {
   name = "${aws_eks_cluster.dev.name}.launch-template"
-  image_id               = "ami-053b0d53c279acc90"
+  image_id               = "ami-08a52ddb321b32a8c"
   instance_type          = "t3.small"
   update_default_version = true
 
