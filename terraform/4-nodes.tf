@@ -95,24 +95,6 @@ resource "aws_eks_node_group" "private-nodes" {
 
 resource "aws_launch_template" "dev" {
   name = "${aws_eks_cluster.dev.name}.launch-template"
-  image_id               = "ami-08a52ddb321b32a8c"
-  update_default_version = true
-
-  #key_name = ""
-
-  block_device_mappings {
-    device_name = "/dev/sda1"
-
-    ebs {
-      volume_size = 20
-      volume_type = "gp3"
-    }
-  }
-
-    tags = {
-
-      Name = "${var.cluster_name}-private-nodes"
-}
   }
 
 
