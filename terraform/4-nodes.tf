@@ -92,24 +92,27 @@ resource "aws_eks_node_group" "private-nodes" {
 
 
 resource "aws_launch_template" "dev" {
-  count = 2
+  image_id               = data.aws_ssm_parameter.cluster.value
+  instance_type          = "t3.small"
+  name                   = ${aws_eks_cluster.dev.name}.launch-template"
+  update_default_version = true
 
-  name = "eks"
-  instance_type = "t2.micro"
+  key_name = "eks-test"
 
   block_device_mappings {
     device_name = "/dev/sda1"
+
     ebs {
-      volume_size = 10
-      volume_type = "gp3"
+      volume_size = 20
     }
   }
 
   tag_specifications {
     resource_type = "instance"
+
     tags = {
-      Name = "node-${count.index + 1}"
+      Name                        = aws_eks_node_group.private-nodes.node_group_name
     }
   }
-}
 
+}
