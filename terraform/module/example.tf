@@ -27,6 +27,8 @@ module "eks" {
   public_subnet_1  = "10.0.64.0/19"
   public_subnet_2  = "10.0.96.0/19"
   public_subnet_3  = "10.0.160.0/19"
+  ##### Logs #####
+  enable_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 }
 output "eks" {
   value = module.eks.eks
