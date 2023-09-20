@@ -7,7 +7,9 @@ variable "domain" {}
 variable "desired_size" {}
 variable "environment" {}
 variable "external_dns" {}
-variable "enable_cluster_log_types" {}
+variable "enable_cluster_log_types" {
+  type = list(string)
+}
 variable "hosted_zone_id" {}
 variable "instance_types" {}
 variable "max_size" {}
