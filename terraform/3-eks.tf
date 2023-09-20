@@ -63,7 +63,7 @@ resource "aws_eks_cluster" "dev" {
     ]
   }
   #allow control-plane logging
-  enabled_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
+  enabled_cluster_log_types = var.enable_cluster_log_types
   depends_on                = [aws_iam_role_policy_attachment.dev-AmazonEKSClusterPolicy]
 }
 
