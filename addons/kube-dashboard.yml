@@ -22,4 +22,4 @@ subjects:
   namespace: kubernetes-dashboard
 
 # kubectl create token  admin-user -n kubernetes-dashboard
-# kubectl port-forward pod/kubernetes-dashboard-6ff574dd47-gmkbt -n kubernetes-dashboard 8443:8443
+# kubectl port-forward $(kubectl get pods -n kubernetes-dashboard -l k8s-app=kubernetes-dashboard -o jsonpath="{.items[0].metadata.name}") -n kubernetes-dashboard 8443:8443
