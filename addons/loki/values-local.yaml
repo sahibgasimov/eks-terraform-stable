@@ -37,7 +37,7 @@ loki:
 serviceAccount:
   create: true
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::444187421781:role/loki"
+    eks.amazonaws.com/role-arn: "arn:aws:iam:::role/loki"
 write:
   replicas: 2
     
