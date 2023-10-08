@@ -1,0 +1,26 @@
+#creates a pod to test IAM roles for service accounts. create a service account and use it in your pod spec. It can be anything, deployment, statefulset, or some jobs.
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: aws-test
+  namespace: default
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam:::role/test-oidc
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: aws-cli
+  namespace: default
+spec:
+  serviceAccountName: aws-test
+  containers:
+  - name: aws-cli
+    image: amazon/aws-cli
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+  tolerations:
+  - operator: Exists
+    effect: NoSchedule
+# kubectl exec aws-cli -- aws s3api list-buckets
