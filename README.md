@@ -50,8 +50,8 @@ module "eks" {
   max_unavailable = 1
   ##### Route53 Domain #####
   region         = "us-east-1"
-  domain         = "349085342913.realhandsonlabs.net"
-  hosted_zone_id = "Z10013141BU1GNFS3VGI9"
+  domain         = "34908534.realhaonlabs.net"
+  hosted_zone_id = "Z10013141223FS3VGI9"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
