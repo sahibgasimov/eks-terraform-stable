@@ -2,13 +2,13 @@ module "eks" {
   source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
   #### EKS Cluster ####
   cluster_name    = "dev"
-  cluster_version = "1.26"
+  cluster_version = "1.27"
   environment     = "dev"
   ##### ALB Ingress Controller and External DNS #####
   external_dns          = "6.20.3"
   alb_ingress           = "1.5.3"
   alb_ingress_image_tag = "v2.5.2"
-  csi_driver = "v1.19.0-eksbuild.1"
+  csi_driver = "v1.26.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
   desired_size    = 2
