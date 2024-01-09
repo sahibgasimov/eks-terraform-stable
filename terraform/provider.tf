@@ -11,7 +11,7 @@ terraform {
     }
   }
 }
-###############################create these 2 resources first 
+###############################create these 2 resources first
 /* resource "aws_s3_bucket" "mybucket" {
     bucket = "cmcloudlab893-info"
     versioning {
@@ -44,7 +44,7 @@ resource "aws_dynamodb_table" "statelock" {
 //  }
 // }
 
-#once above resources are created, replace line 5 code with the below to save tfstate on s3 backend 
+#once above resources are created, replace line 5 code with the below to save tfstate on s3 backend
 
 # terraform {
 #     required_version = ">= 0.14.7"
