@@ -1,14 +1,14 @@
 module "eks" {
-  source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main" 
+  source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
   #### EKS Cluster ####
   cluster_name    = "dev"
-  cluster_version = "1.28"
+  cluster_version = "1.26"
   environment     = "dev"
   ##### ALB Ingress Controller and External DNS #####
-  external_dns          = "6.28.5"
-  alb_ingress           = "1.6.1"
-  alb_ingress_image_tag = "v2.6.1"
-  csi_driver = "v1.26.0-eksbuild.1"
+  external_dns          = "6.20.3"
+  alb_ingress           = "1.5.3"
+  alb_ingress_image_tag = "v2.5.2"
+  csi_driver = "v1.19.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
   desired_size    = 2
@@ -17,8 +17,8 @@ module "eks" {
   max_unavailable = 1
   ##### Route53 Domain #####
   region         = "us-east-1"
-  domain         = "342913.reanlabs.net"
-  hosted_zone_id = "Z10013NFS3VGI9"
+  domain         = "2778219839.realdsonlabs.net"
+  hosted_zone_id = "Z032090321234OEK4"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
