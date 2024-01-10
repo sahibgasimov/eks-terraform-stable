@@ -178,9 +178,6 @@ resource "aws_iam_policy" "aws_load_balancer_controller" {
                 "elasticloadbalancing:RemoveTags"
             ],
             "Resource": [
-                "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
-                "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
-                "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*",
                 "arn:aws:elasticloadbalancing:*"
             ],
             "Condition": {
