@@ -25,5 +25,6 @@ output "eks" {
         EKS Nodes Group Role                    ${aws_iam_role.nodes.arn}
         EKS OIDC                                ${aws_iam_role.dev_oidc.arn}
         OpenID Connect Provider                 ${aws_iam_openid_connect_provider.eks.url}
+        Launch Template ID                      ${aws_launch_template.dev.id}
     EOF
 }
