@@ -118,7 +118,8 @@ resource "aws_launch_template" "dev" {
   #  delete_on_termination     = true
   #  associate_public_ip_address = true
   #}
-
+  tag_specifications {
+    resource_type = "instance"
     tags = {
       Name        = var.cluster_name
     }
