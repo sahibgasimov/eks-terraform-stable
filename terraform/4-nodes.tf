@@ -98,3 +98,28 @@ resource "aws_launch_template" "dev" {
   name = "eks"
 }
 
+resource "aws_launch_template" "dev" {
+  name_prefix   = var.cluster_name
+  image_id      = var.ami_id
+  instance_type = var.instance_types
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = 30
+      volume_type = "gp3"
+      encrypted   = true
+    }
+  }
+
+  # Example of configuring network interfaces
+  #network_interfaces {
+  #  device_index              = 0
+  #  network_interface_id      = "eni-12345678"  # Replace with your ENI ID
+  #  delete_on_termination     = true
+  #  associate_public_ip_address = true
+  #}
+
+    tags = {
+      Name        = var.cluster_name
+    }
+  }
