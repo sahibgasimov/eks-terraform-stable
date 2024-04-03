@@ -93,11 +93,6 @@ resource "aws_eks_node_group" "private-nodes" {
 
 
 
-
-resource "aws_launch_template" "dev" {
-  name = "eks"
-}
-
 resource "aws_launch_template" "dev" {
   name_prefix   = var.cluster_name
   image_id      = var.ami_id
@@ -124,3 +119,4 @@ resource "aws_launch_template" "dev" {
       Name        = var.cluster_name
     }
   }
+}
