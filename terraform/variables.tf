@@ -1,6 +1,6 @@
 variable "alb_ingress" {}
 variable "alb_ingress_image_tag" {}
-variable "csi_driver" {}
+#variable "csi_driver" {}
 variable "cluster_name" {}
 variable "cluster_version" {}
 variable "domain" {}
