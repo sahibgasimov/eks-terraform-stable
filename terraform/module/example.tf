@@ -8,7 +8,7 @@ module "eks" {
   external_dns          = "6.20.3"
   alb_ingress           = "1.5.3"
   alb_ingress_image_tag = "v2.5.2"
-  csi_driver = "v1.26.0-eksbuild.1"
+  #csi_driver = "v1.26.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
   ami_id          = "ami-0bdf2416a89d5e29f" #amazon-eks-arm64-node-1.27-v20240110
@@ -29,7 +29,7 @@ module "eks" {
   public_subnet_2  = "10.0.96.0/19"
   public_subnet_3  = "10.0.160.0/19"
   ##### Logs #####
-  enable_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
+  #enable_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 }
 output "eks" {
   value = module.eks.eks
