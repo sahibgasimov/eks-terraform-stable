@@ -1,18 +1,20 @@
+# IAM Role for EKS Node Group
 resource "aws_iam_role" "nodes" {
   name = "eks-node-group-nodes"
 
   assume_role_policy = jsonencode({
+    Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
       Effect = "Allow"
       Principal = {
         Service = "ec2.amazonaws.com"
       }
+      Action = "sts:AssumeRole"
     }]
-    Version = "2012-10-17"
   })
 }
 
+# IAM Policy Attachments for EKS Node Group Role
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.nodes.name
@@ -28,13 +30,35 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   role       = aws_iam_role.nodes.name
 }
 
-
 resource "aws_iam_role_policy_attachment" "nodes-AmazonSSMManagedInstanceCore" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   role       = aws_iam_role.nodes.name
 }
 
+# Launch Template for EC2 Instances in EKS Node Group
+resource "aws_launch_template" "dev" {
+  name_prefix   = var.cluster_name
+  image_id      = var.ami_id
+  instance_type = var.instance_types
 
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = 30
+      volume_type = "gp3"
+      encrypted   = true
+    }
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = var.cluster_name
+    }
+  }
+}
+
+# EKS Node Group
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.dev.name
   node_group_name = "${var.cluster_name}-private-nodes"
@@ -48,12 +72,11 @@ resource "aws_eks_node_group" "private-nodes" {
 
   lifecycle {
     create_before_destroy = true
-    # Allow external changes without Terraform plan difference
     ignore_changes = [scaling_config[0].desired_size]
   }
-  capacity_type  = "ON_DEMAND"
-  instance_types = ["${var.instance_types}"]
 
+  capacity_type  = "ON_DEMAND"
+ #instance_types = [var.instance_types]
 
   scaling_config {
     desired_size = var.desired_size
@@ -69,54 +92,15 @@ resource "aws_eks_node_group" "private-nodes" {
     role = "general"
   }
 
-  # taint {
-  #   key    = "team"
-  #   value  = "developers"
-  #   effect = "NO_SCHEDULE"
-  # }
-
   launch_template {
     name    = aws_launch_template.dev.name
     version = aws_launch_template.dev.latest_version
   }
 
-
-
-
-  /* depends_on = [
+  depends_on = [
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
     aws_iam_role_policy_attachment.nodes-AmazonSSMManagedInstanceCore,
-  ] */
-}
-
-
-
-resource "aws_launch_template" "dev" {
-  name_prefix   = var.cluster_name
-  image_id      = var.ami_id
-  instance_type = var.instance_types
-  block_device_mappings {
-    device_name = "/dev/xvda"
-    ebs {
-      volume_size = 30
-      volume_type = "gp3"
-      encrypted   = true
-    }
-  }
-
-  # Example of configuring network interfaces
-  #network_interfaces {
-  #  device_index              = 0
-  #  network_interface_id      = "eni-12345678"  # Replace with your ENI ID
-  #  delete_on_termination     = true
-  #  associate_public_ip_address = true
-  #}
-  tag_specifications {
-    resource_type = "instance"
-    tags = {
-      Name        = var.cluster_name
-    }
-  }
+  ]
 }
