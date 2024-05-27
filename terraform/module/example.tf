@@ -8,7 +8,7 @@ module "eks" {
   external_dns          = "6.20.3"
   alb_ingress           = "1.5.3"
   alb_ingress_image_tag = "v2.5.2"
-  #csi_driver = "v1.27.0-eksbuild.1"
+  csi_driver = "v1.27.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
   ami_id          = "ami-07752b0f77caea762" #amazon-eks-node-al2023-x86_64-standard-1.27
