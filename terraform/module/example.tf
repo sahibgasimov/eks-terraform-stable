@@ -8,18 +8,18 @@ module "eks" {
   external_dns          = "6.20.3"
   alb_ingress           = "1.5.3"
   alb_ingress_image_tag = "v2.5.2"
-  #csi_driver = "v1.26.0-eksbuild.1"
+  #csi_driver = "v1.27.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
-  ami_id          = "ami-0bdf2416a89d5e29f" #amazon-eks-arm64-node-1.27-v20240110
+  ami_id          = "ami-07752b0f77caea762" #amazon-eks-node-al2023-x86_64-standard-1.27
   desired_size    = 2
   max_size        = 5
   min_size        = 2
   max_unavailable = 1
   ##### Route53 Domain #####
   region         = "us-east-1"
-  domain         = "2778219839.realdsonlabs.net"
-  hosted_zone_id = "Z032090321234OEK4"
+  domain         = "683870173154.realhandsonlabs.net"
+  hosted_zone_id = "Z04314322OK5TKE36K209"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
@@ -33,4 +33,5 @@ module "eks" {
 }
 output "eks" {
   value = module.eks.eks
+}
 }
