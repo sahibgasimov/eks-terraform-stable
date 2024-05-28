@@ -46,6 +46,7 @@ resource "random_id" "node_id" {
 resource "aws_launch_template" "dev" {
   name_prefix   = "${var.cluster_name}-${random_id.node_id.hex}-"
   image_id      = var.ami_id
+  instance_type = var.instance_types
 
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -71,7 +72,6 @@ resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.dev.name
   node_group_name = "${var.cluster_name}-private-nodes-al"
   node_role_arn   = aws_iam_role.nodes.arn
-  instance_type = var.instance_types
 
 
   timeouts {
