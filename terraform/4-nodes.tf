@@ -66,14 +66,17 @@ resource "aws_launch_template" "dev" {
 }
 
 
+
 # EKS Node Group
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.dev.name
   node_group_name = "${var.cluster_name}-private-nodes-al"
   node_role_arn   = aws_iam_role.nodes.arn
+
   timeouts {
     create = "60m"
   }
+
   subnet_ids = [
     aws_subnet.private-1.id,
     aws_subnet.private-2.id,
@@ -85,8 +88,7 @@ resource "aws_eks_node_group" "private-nodes" {
     ignore_changes = [scaling_config[0].desired_size]
   }
 
-  capacity_type  = "ON_DEMAND"
-  instance_types = [var.instance_types]
+  capacity_type = "ON_DEMAND"
 
   scaling_config {
     desired_size = var.desired_size
