@@ -33,7 +33,7 @@ resource "aws_eks_addon" "csi_driver" {
   service_account_role_arn = aws_iam_role.eks_ebs_csi_driver.arn
 
   depends_on = [
-    aws_eks_cluster.dev,
-    aws_eks_node_group.private-nodes
+    aws_eks_cluster.dev
   ]
 }
+
