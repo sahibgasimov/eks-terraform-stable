@@ -1,5 +1,5 @@
 module "eks" {
-  source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
+  source = "../"
   #### EKS Cluster ####
   cluster_name    = "qa"
   cluster_version = "1.28"
@@ -18,8 +18,8 @@ module "eks" {
   max_unavailable = 1
   ##### Route53 Domain #####
   region         = "us-east-1"
-  domain         = "471112831547.realhandsonlabs.net"
-  hosted_zone_id = "Z02401012JGXPA9VQ79T9"
+  domain         = "965244704449.realhandsonlabs.net"
+  hosted_zone_id = "Z100296553Y1IMYY77SJ"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
