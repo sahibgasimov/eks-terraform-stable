@@ -63,7 +63,7 @@ resource "aws_eks_cluster" "dev" {
     ]
   }
   #allow control-plane logging
- #enabled_cluster_log_types = var.enable_cluster_log_types
+  enabled_cluster_log_types = var.enable_cluster_log_types
   depends_on                = [aws_iam_role_policy_attachment.dev-AmazonEKSClusterPolicy]
 }
 
@@ -74,3 +74,4 @@ resource "aws_cloudwatch_log_group" "eks_control_plane_logs" {
   name              = "/aws/eks/${var.cluster_name}/control-plane-logs"
   retention_in_days = 7
 }
+

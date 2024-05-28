@@ -1,14 +1,14 @@
 module "eks" {
-  source = "github.com/sahibgasimov/eks-terraform-stable//terraform?ref=main"
+  source = "../"
   #### EKS Cluster ####
-  cluster_name    = "dev"
-  cluster_version = "1.27"
+  cluster_name    = "qa"
+  cluster_version = "1.28"
   environment     = "dev"
   ##### ALB Ingress Controller and External DNS #####
-  external_dns          = "6.20.3"
-  alb_ingress           = "1.5.3"
-  alb_ingress_image_tag = "v2.5.2"
-  csi_driver = "v1.27.0-eksbuild.1"
+  external_dns          = "6.28.5"
+  alb_ingress           = "1.6.1"
+  alb_ingress_image_tag = "v2.6.1"
+  csi_driver = "v1.26.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
   ami_id          = "ami-07752b0f77caea762" #amazon-eks-node-al2023-x86_64-standard-1.27
@@ -18,8 +18,8 @@ module "eks" {
   max_unavailable = 1
   ##### Route53 Domain #####
   region         = "us-east-1"
-  domain         = "683870173154.realhandsonlabs.net"
-  hosted_zone_id = "Z04314322OK5TKE36K209"
+  domain         = "965244704449.realhandsonlabs.net"
+  hosted_zone_id = "Z100296553Y1IMYY77SJ"
   ##### Networking #####
   vpc_cidr         = "10.0.0.0/16"
   private_subnet_1 = "10.0.0.0/19"
@@ -29,7 +29,7 @@ module "eks" {
   public_subnet_2  = "10.0.96.0/19"
   public_subnet_3  = "10.0.160.0/19"
   ##### Logs #####
-  #enable_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
+  enable_cluster_log_types = ["api", "authenticator", "audit", "scheduler", "controllerManager"]
 }
 output "eks" {
   value = module.eks.eks

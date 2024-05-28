@@ -1,20 +1,18 @@
-# IAM Role for EKS Node Group
 resource "aws_iam_role" "nodes" {
   name = "eks-node-group-nodes"
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
     Statement = [{
+      Action = "sts:AssumeRole"
       Effect = "Allow"
       Principal = {
         Service = "ec2.amazonaws.com"
       }
-      Action = "sts:AssumeRole"
     }]
+    Version = "2012-10-17"
   })
 }
 
-# IAM Policy Attachments for EKS Node Group Role
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.nodes.name
@@ -30,53 +28,17 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   role       = aws_iam_role.nodes.name
 }
 
+
 resource "aws_iam_role_policy_attachment" "nodes-AmazonSSMManagedInstanceCore" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   role       = aws_iam_role.nodes.name
 }
 
-resource "random_id" "node_id" {
-  byte_length = 4
-  keepers = {
-    # Ensure the ID changes when the cluster name changes
-    cluster_name = var.cluster_name
-  }
-}
 
-resource "aws_launch_template" "dev" {
-  name_prefix   = "${var.cluster_name}-${random_id.node_id.hex}-"
-  image_id      = var.ami_id
-  instance_type = var.instance_types
-
-  block_device_mappings {
-    device_name = "/dev/xvda"
-    ebs {
-      volume_size = 30
-      volume_type = "gp3"
-      encrypted   = true
-    }
-  }
-
-  tag_specifications {
-    resource_type = "instance"
-    tags = {
-      Name = "${var.cluster_name}-${random_id.node_id.hex}"
-    }
-  }
-}
-
-
-
-# EKS Node Group
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.dev.name
-  node_group_name = "${var.cluster_name}-private-nodes-al"
+  node_group_name = "${var.cluster_name}-private-nodes"
   node_role_arn   = aws_iam_role.nodes.arn
-
-
-  timeouts {
-    create = "60m"
-  }
 
   subnet_ids = [
     aws_subnet.private-1.id,
@@ -86,10 +48,12 @@ resource "aws_eks_node_group" "private-nodes" {
 
   lifecycle {
     create_before_destroy = true
+    # Allow external changes without Terraform plan difference
     ignore_changes = [scaling_config[0].desired_size]
   }
+  capacity_type  = "ON_DEMAND"
+  instance_types = ["${var.instance_types}"]
 
-  capacity_type = "ON_DEMAND"
 
   scaling_config {
     desired_size = var.desired_size
@@ -105,16 +69,33 @@ resource "aws_eks_node_group" "private-nodes" {
     role = "general"
   }
 
+  # taint {
+  #   key    = "team"
+  #   value  = "developers"
+  #   effect = "NO_SCHEDULE"
+  # }
+
   launch_template {
     name    = aws_launch_template.dev.name
     version = aws_launch_template.dev.latest_version
   }
 
-  depends_on = [
+
+
+
+  /* depends_on = [
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
     aws_iam_role_policy_attachment.nodes-AmazonSSMManagedInstanceCore,
-  ]
+  ] */
 }
+
+
+
+
+resource "aws_launch_template" "dev" {
+  name = "eks"
+}
+
 
