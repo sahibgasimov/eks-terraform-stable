@@ -69,7 +69,7 @@ resource "aws_launch_template" "dev" {
 # EKS Node Group
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.dev.name
-  node_group_name = "${var.cluster_name}-private-nodes"
+  node_group_name = "${var.cluster_name}-private-nodes-al"
   node_role_arn   = aws_iam_role.nodes.arn
   timeouts {
     create = "60m"
