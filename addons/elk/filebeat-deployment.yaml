@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filebeat
+  namespace: elk
+  labels:
+    app: filebeat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filebeat
+  template:
+    metadata:
+      labels:
+        app: filebeat
+    spec:
+      containers:
+      - name: filebeat
+        image: docker.elastic.co/beats/filebeat:7.10.0
+        args: [
+          "-e", 
+        ]
+        securityContext:
+          runAsUser: 0 
+        volumeMounts:
+        - name: config
+          mountPath: /usr/share/filebeat/filebeat.yml
+          subPath: filebeat.yml
+        - name: logs
+          mountPath: /path/to/your/logs
+      volumes:
+      - name: config
+        configMap:
+          name: filebeat-config
+      - name: logs
+        hostPath:
+          path: /path/to/your/logs
+          type: DirectoryOrCreate
