@@ -35,9 +35,16 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonSSMManagedInstanceCore" {
   role       = aws_iam_role.nodes.name
 }
 
-# Launch Template for EC2 Instances in EKS Node Group
+resource "random_id" "node_id" {
+  byte_length = 4
+  keepers = {
+    # Ensure the ID changes when the cluster name changes
+    cluster_name = var.cluster_name
+  }
+}
+
 resource "aws_launch_template" "dev" {
-  name_prefix   = var.cluster_name
+  name_prefix   = "${var.cluster_name}-${random_id.node_id.hex}-"
   image_id      = var.ami_id
   instance_type = var.instance_types
 
@@ -53,10 +60,11 @@ resource "aws_launch_template" "dev" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = var.cluster_name
+      Name = "${var.cluster_name}-${random_id.node_id.hex}"
     }
   }
 }
+
 
 # EKS Node Group
 resource "aws_eks_node_group" "private-nodes" {
@@ -76,7 +84,7 @@ resource "aws_eks_node_group" "private-nodes" {
   }
 
   capacity_type  = "ON_DEMAND"
- #instance_types = [var.instance_types]
+  instance_types = [var.instance_types]
 
   scaling_config {
     desired_size = var.desired_size
@@ -104,3 +112,4 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_iam_role_policy_attachment.nodes-AmazonSSMManagedInstanceCore,
   ]
 }
+
