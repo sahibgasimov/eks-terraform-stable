@@ -11,7 +11,7 @@ module "eks" {
   csi_driver = "v1.26.0-eksbuild.1"
   ##### Nodes Autoscaling desired instance size #####
   instance_types  = "t3.small"
-  ami_id          = "ami-07752b0f77caea762" #amazon-eks-node-al2023-x86_64-standard-1.27
+  ami_id          = "ami-05d018b6c09ba06ab" #amazon-eks-node-al2023-x86_64-standard-1.28
   desired_size    = 2
   max_size        = 5
   min_size        = 2
