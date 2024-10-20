@@ -1,7 +1,7 @@
 module "eks" {
   source = "../"
   #### EKS Cluster ####
-  cluster_name    = "qa"
+  cluster_name    = "dev"
   cluster_version = "1.28"
   environment     = "dev"
   ##### ALB Ingress Controller and External DNS #####
